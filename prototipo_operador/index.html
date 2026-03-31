@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jabuti Exibido - Parlamentar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        .mobile-frame { max-width: 412px; height: 892px; margin: 20px auto; background: #fff; border: 12px solid #0f172a; border-radius: 48px; overflow: hidden; position: relative; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); display: flex; flex-direction: column; }
+        .screen { display: none; flex-direction: column; flex: 1; overflow-y: auto; }
+        .screen.active { display: flex; }
+        
+        .status-badge { padding: 2px 8px; border-radius: 6px; font-size: 9px; font-weight: 800; text-transform: uppercase; }
+        .badge-new { background: #dcfce7; color: #166534; }
+        .badge-alt { background: #fef9c3; color: #854d0e; }
+        
+        .gradient-bar { height: 12px; border-radius: 6px; background: linear-gradient(to right, #22c55e, #eab308, #ef4444); }
+        .marker { width: 4px; height: 16px; background: #0f172a; border-radius: 2px; position: relative; top: -2px; }
+
+        .vote-btn { transition: all 0.2s; }
+        .vote-btn:active { transform: scale(0.95); }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <div class="mobile-frame">
+        <!-- Status Bar -->
+        <div class="h-10 w-full flex justify-between items-center px-10 text-xs font-semibold text-slate-800 shrink-0">
+            <span>9:41</span>
+            <div class="flex gap-2">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+
+        <!-- 1. TELA DE LOGIN -->
+        <div id="screen-login" class="screen active p-8 flex flex-col justify-center">
+            <div class="w-24 h-24 bg-blue-600 rounded-3xl mx-auto mb-8 flex items-center justify-center text-white text-4xl shadow-lg shadow-blue-200">
+                <i class="fas fa-landmark"></i>
+            </div>
+            
+            <h2 class="text-2xl font-bold text-center text-slate-900 mb-2">Bem-vindo</h2>
+            <p class="text-slate-400 text-sm text-center mb-8">Acesse o painel parlamentar</p>
+
+            <div class="space-y-4 mb-6">
+                <div class="relative">
+                    <i class="far fa-user absolute left-4 top-4 text-slate-400"></i>
+                    <input type="text" placeholder="Usuário" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="relative">
+                    <i class="fas fa-lock absolute left-4 top-4 text-slate-400"></i>
+                    <input type="password" placeholder="Senha" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+
+            <button onclick="changeScreen('dashboard')" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-blue-200 active:scale-95 transition-transform mb-8">
+                Entrar
+            </button>
+
+            <!-- Notificações -->
+            <div class="mt-4">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 text-center">Notificações Recentes</p>
+                <div class="space-y-2 opacity-60 pointer-events-none">
+                    <div class="bg-slate-50 p-3 rounded-xl flex justify-between items-center border border-slate-100">
+                        <span class="text-xs font-bold text-slate-700">PL 2630/2020</span>
+                        <span class="status-badge badge-alt">Alterado</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl flex justify-between items-center border border-slate-100">
+                        <span class="text-xs font-bold text-slate-700">PL 2645/2022</span>
+                        <span class="status-badge badge-alt">Alterado</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl flex justify-between items-center border border-slate-100">
+                        <span class="text-xs font-bold text-slate-700">PL 2701/2026</span>
+                        <span class="status-badge badge-new">Novo</span>
+                    </div>
+                </div>
+                <p class="text-[9px] text-center text-blue-600 font-medium mt-3 italic">Faça login para ver detalhes</p>
+            </div>
+        </div>
+
+        <!-- 2. DASHBOARD PARLAMENTAR -->
+        <div id="screen-dashboard" class="screen">
+            <header class="px-6 pt-4 pb-2 shrink-0">
+                <p class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Poder Legislativo</p>
+                <h1 class="text-xl font-black text-slate-900">Câmara dos Deputados</h1>
+            </header>
+
+            <div class="px-6 mb-6">
+                <div class="relative">
+                    <input type="text" placeholder="Buscar projeto (Ex: PL 2630)..." class="w-full bg-slate-100 rounded-2xl py-3 pl-4 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button class="absolute right-3 top-2.5 w-8 h-8 bg-white rounded-xl shadow-sm text-slate-600">
+                        <i class="fas fa-search text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="px-6 flex-1 overflow-y-auto pb-8">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold text-slate-900">Em Pauta</h2>
+                    <i class="fas fa-sliders-h text-slate-400 text-sm"></i>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Item 1 -->
+                    <div class="p-5 bg-white rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4 active:bg-slate-50 transition-colors" onclick="openDetail('PL 2630/2020', 'Regulação de Redes Sociais')">
+                        <div class="flex-1">
+                            <div class="flex gap-2 mb-2">
+                                <span class="status-badge badge-alt">Alterado</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-sm">PL 2630/2020</h3>
+                            <p class="text-[10px] text-slate-400">Combate a desinformação e transparência...</p>
+                        </div>
+                        <i class="fas fa-chevron-right text-slate-300"></i>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="p-5 bg-white rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4" onclick="openDetail('PL 2645/2022', 'Marco Legal da IA')">
+                        <div class="flex-1">
+                            <div class="flex gap-2 mb-2">
+                                <span class="status-badge badge-alt">Alterado</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-sm">PL 2645/2022</h3>
+                            <p class="text-[10px] text-slate-400">Desenvolvimento e uso da IA no Brasil...</p>
+                        </div>
+                        <i class="fas fa-chevron-right text-slate-300"></i>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="p-5 bg-white rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4" onclick="openDetail('PL 2701/2026', 'Incentivo à Tecnologia')">
+                        <div class="flex-1">
+                            <div class="flex gap-2 mb-2">
+                                <span class="status-badge badge-new">Novo</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-sm">PL 2701/2026</h3>
+                            <p class="text-[10px] text-slate-400">Novo regime fiscal para semicondutores...</p>
+                        </div>
+                        <i class="fas fa-chevron-right text-slate-300"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Nav (Fictício para o parlamentar) -->
+            <nav class="h-20 bg-white border-t border-slate-50 px-10 flex justify-between items-center shrink-0">
+                <i class="fas fa-home text-blue-600 text-xl"></i>
+                <i class="fas fa-gavel text-slate-300 text-xl"></i>
+                <i class="far fa-user text-slate-300 text-xl"></i>
+            </nav>
+        </div>
+
+        <!-- 3. DETALHE DO PROJETO E VOTAÇÃO -->
+        <div id="screen-detail" class="screen absolute inset-0 bg-white z-50">
+            <header class="px-6 py-6 flex items-center border-b border-slate-50">
+                <button onclick="changeScreen('dashboard')" class="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-600 mr-4">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div>
+                    <h2 id="detail-pl-num" class="font-black text-lg text-slate-900">PL 2630/2020</h2>
+                    <p id="detail-pl-title" class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Regulação de Streaming</p>
+                </div>
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-6">
+                <!-- Ficha do Projeto -->
+                <div class="bg-slate-50 rounded-3xl p-5 mb-6 border border-slate-100">
+                    <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Ficha do Projeto</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between border-b border-slate-200/50 pb-2">
+                            <span class="text-xs text-slate-500">Texto Original</span>
+                            <span class="text-xs font-bold text-slate-900">Não</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-200/50 pb-2">
+                            <span class="text-xs text-slate-500">Autoria</span>
+                            <span class="text-xs font-bold text-slate-900">Dep. João Lemos - PSD/TO</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-xs text-slate-500">Regime de Urgência</span>
+                            <span class="text-xs font-bold text-red-600">Sim</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orientações -->
+                <div class="space-y-4 mb-8">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Orientação do Partido</span>
+                            <span id="party-orientation-label" class="text-[10px] font-bold text-green-600 uppercase">Aprovar</span>
+                        </div>
+                        <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                            <div id="party-orientation-bar" class="h-full w-full bg-green-500 transition-all duration-500"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Orientação da Bancada</span>
+                            <span id="bench-orientation-label" class="text-[10px] font-bold text-amber-500 uppercase">Neutra</span>
+                        </div>
+                        <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                            <div id="bench-orientation-bar" class="h-full w-1/2 bg-amber-400 transition-all duration-500"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 block">Sentimento da Casa</span>
+                        <div class="gradient-bar px-1 relative">
+                            <div class="marker" style="left: 65%;"></div>
+                        </div>
+                        <div class="flex justify-between mt-1">
+                            <span class="text-[8px] font-bold text-green-600">Aprovar</span>
+                            <span class="text-[8px] font-bold text-red-600">Reprovar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botões de Voto -->
+                <div class="grid grid-cols-3 gap-3 mb-10">
+                    <button id="btn-approve" onclick="castVote('approve')" class="vote-btn flex flex-col items-center justify-center p-4 bg-green-50 rounded-2xl border border-green-100">
+                        <div class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center mb-2 shadow-md shadow-green-200">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-green-700">Aprovo</span>
+                    </button>
+                    <button id="btn-abstain" onclick="castVote('abstain')" class="vote-btn flex flex-col items-center justify-center p-4 bg-amber-50 rounded-2xl border border-amber-100">
+                        <div class="w-10 h-10 rounded-full bg-amber-400 text-white flex items-center justify-center mb-2 shadow-md shadow-amber-200">
+                            <i class="fas fa-minus"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-amber-700">Abstenho</span>
+                    </button>
+                    <button id="btn-reject" onclick="castVote('reject')" class="vote-btn flex flex-col items-center justify-center p-4 bg-red-50 rounded-2xl border border-red-100">
+                        <div class="w-10 h-10 rounded-full bg-red-500 text-white flex items-center justify-center mb-2 shadow-md shadow-red-200">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-red-700">Reprovo</span>
+                    </button>
+                </div>
+
+                <!-- Ações LLM -->
+                <div class="space-y-4">
+                    <button class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-3">
+                        <i class="fas fa-brain text-blue-400"></i>
+                        Ver Detalhes (Análise IA)
+                    </button>
+                    <button class="w-full bg-slate-100 text-slate-900 py-4 rounded-2xl font-bold flex items-center justify-center gap-3">
+                        <i class="far fa-file-alt text-slate-400"></i>
+                        Ver Resumo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function changeScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-' + screenId).classList.add('active');
+        }
+
+        function openDetail(num, title) {
+            document.getElementById('detail-pl-num').innerText = num;
+            document.getElementById('detail-pl-title').innerText = title;
+            changeScreen('detail');
+        }
+
+        function castVote(type) {
+            const label = document.getElementById('party-orientation-label');
+            const bar = document.getElementById('party-orientation-bar');
+            
+            // Reset button styles
+            document.querySelectorAll('.vote-btn').forEach(btn => {
+                btn.style.opacity = "0.5";
+                btn.style.borderWidth = "1px";
+            });
+
+            if (type === 'approve') {
+                label.innerText = "Aprovar";
+                label.className = "text-[10px] font-bold text-green-600 uppercase";
+                bar.className = "h-full w-full bg-green-500 transition-all duration-500";
+                document.getElementById('btn-approve').style.opacity = "1";
+                document.getElementById('btn-approve').style.borderWidth = "2px";
+                document.getElementById('btn-approve').style.borderColor = "#22c55e";
+            } else if (type === 'abstain') {
+                label.innerText = "Neutra";
+                label.className = "text-[10px] font-bold text-amber-500 uppercase";
+                bar.className = "h-full w-1/2 bg-amber-400 transition-all duration-500";
+                document.getElementById('btn-abstain').style.opacity = "1";
+                document.getElementById('btn-abstain').style.borderWidth = "2px";
+                document.getElementById('btn-abstain').style.borderColor = "#fbbf24";
+            } else if (type === 'reject') {
+                label.innerText = "Reprovar";
+                label.className = "text-[10px] font-bold text-red-600 uppercase";
+                bar.className = "h-full w-full bg-red-500 transition-all duration-500";
+                document.getElementById('btn-reject').style.opacity = "1";
+                document.getElementById('btn-reject').style.borderWidth = "2px";
+                document.getElementById('btn-reject').style.borderColor = "#ef4444";
+            }
+        }
+    </script>
+</body>
+</html>
