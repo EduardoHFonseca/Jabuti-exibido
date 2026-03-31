@@ -1,66 +1,54 @@
 # Jabuti Exibido
 
 ## Definição do Projeto
-O objetivo do projeto **Jabuti Exibido** é monitorar projetos de lei em sites governamentais através de um Web Crawler. O sistema extrairá informações, armazenará em um RAG (Retrieval-Augmented Generation) e utilizará um LLM para identificar "Jabutis" — trechos de texto inseridos em projetos de lei que não possuem relação direta com o objetivo primário da norma. Além disso, o LLM analisará o conteúdo sob outros prismas, como aumento de gastos públicos ou supressão de direitos individuais. Os resultados processados serão enviados para uma aplicação Mobile para consulta pública.
+O projeto **Jabuti Exibido** monitora projetos de lei em sites governamentais através de um Web Crawler. O sistema extrai informações, armazena em um RAG (Retrieval-Augmented Generation) e utiliza um LLM para identificar "Jabutis" — trechos inseridos em PLs sem relação com o objetivo primário da norma. O sistema fornece análises técnicas sobre riscos fiscais, jurídicos e ambientais para auxiliar parlamentares e o público.
 
 ## Funcionalidades Principais
-- **Web Crawler:** Varredura periódica de sites do Governo em busca de novos PLs.
-- **RAG System:** Armazenamento e recuperação eficiente do conteúdo das leis usando busca semântica.
+- **Web Crawler:** Varredura periódica de sites (Câmara, Senado, DOU).
+- **RAG System:** Busca semântica baseada na Constituição Federal, leis vigentes e histórico de projetos rejeitados.
 - **LLM Processing:** 
-  - Identificação de "Jabutis".
-  - Análise de impacto (custos, direitos, etc.).
-- **Integração Mobile:** Disponibilização dos dados analisados e notificações push sobre novos projetos polêmicos.
+  - Identificação de "Jabutis" (contrabando legislativo).
+  - **9 Quesitos de Análise IA:** Criação de Impostos, Aumento do Estado, Censura & Regulação, Cartel & Monopólio, Benefício Social, Impacto Ambiental, Confusão Jurídica, Fragmentação Normativa e Avança competências.
+  - **Customização por Partido:** Filtros ideológicos e técnicos específicos por agremiação (ex: NOVO, PT, PL).
+  - **Comparação Histórica:** Detecção de reintrodução de textos (fatiamento legislativo).
+- **Integração Mobile:** Interface de alta legibilidade para consulta de pauta e alertas em tempo real.
 
-## Arquitetura e Stack Técnica (MVP)
-| Componente | Tecnologia Recomendada |
+## Arquitetura e Stack Técnica
+| Componente | Tecnologia |
 | :--- | :--- |
-| **Backend + API** | Python (FastAPI) no Railway.app |
-| **Banco de Dados** | Supabase (PostgreSQL + pgvector para RAG) |
-| **Autenticação** | Supabase Auth |
-| **LLM (IA)** | Groq (Llama 3.1 70B / Mixtral 8x22B) |
-| **Crawler** | GitHub Actions + Playwright (Python) |
-| **App Mobile** | Flutter |
-| **Notificações** | Firebase Cloud Messaging (FCM) |
-| **Monitoramento** | Sentry + Logtail |
-| **Domínio/SSL** | Cloudflare |
+| **Backend + API** | Python (FastAPI) |
+| **Banco de Dados** | Supabase (PostgreSQL + pgvector) |
+| **LLM (IA)** | Groq / OpenAI (GPT-4o) |
+| **Crawler** | Playwright (Python) |
+| **Hospedagem** | GitHub (Hospedagem de Protótipo: here.now) |
 
-## Detalhamento de Telas (Protótipo)
+## Detalhamento de Telas (Status Atual)
 
-### Perfil: Operador / Administrador
-1. **Dashboard:** Status dos Crawlers, volume de PLs e fila de análise crítica (IA).
-2. **Fontes (Alvos):** Gestão de URLs (Câmara, Senado, etc.).
-3. **Configuração de IA:** Gestão dos critérios de análise (ex: "Aumenta despesa?").
-4. **Editor de Jabutis:** Visualização do texto original com destaques da IA para revisão manual antes da publicação.
+### 1. Perfil Parlamentar / Consumidor
+- **Login:** Splash screen com logo e preview de notificações (PLs Novos/Alterados).
+- **Projetos em Pauta:** Lista simplificada com títulos curtos e status.
+- **Ficha Técnica (Capa):** 
+    - Identificação: Nro, Autor, Estado, Regime de Urgência.
+    - Orientações: Partido, Bancada e sua inclinação pessoal.
+    - **Percepção da Casa/Partido:** Slider gradiente (Verde/Amarelo/Vermelho) dinâmico por perfil.
+    - **Notas do Gabinete:** Espaço para comentários internos.
+- **Análise IA (Riscos & Alertas):** Lista de 9 quesitos com níveis de risco (Alto, Moderado, Baixo) e Impacto Ambiental (Positivo, Neutro, Negativo).
+- **Parecer Técnico (Análise Detalhada):** Estrutura modular (O que é, Jabuti Detectado, Impacto Técnico, Recomendação, Confronto RAG).
 
-### Perfil: Parlamentar (Com Voto)
-1. **Login:** Acesso restrito com preview de notificações (3 linhas de PLs Novos/Alterados).
-2. **Dashboard Parlamentar:** Lista "Em Pauta" com indicadores visual de Novo/Alterado e barra de busca.
-3. **Detalhes do PL:**
-    - Ficha técnica: Nro, Nome, Autor, Regime de Urgência, Texto Original (Sim/Não).
-    - Orientações: Partido, Bancada (definidas pelo líder) e "Sentimento da Casa" (Gradiente de cor).
-4. **Votação Interativa:** Botões Aprovo/Abstenho/Reprovo que reagem visualmente e atualizam a orientação do partido (se for líder).
-5. **Ações:** Links para "Ver Detalhes" (Análise IA) e "Ver Resumo".
+### 2. Perfil Operador / Gestor
+- **Gestão de Fontes:** Grid de URLs com controle de periodicidade e horário de busca.
+- **Captura Manual:** Interface para forçar a busca de um projeto específico.
+- **Console de Operações:** Log em tempo real das atividades do crawler e da IA.
+- **Editor de Jabutis:** Interface de validação humana (Split View) com navegador de quesitos e ajuste de pareceres antes da publicação.
 
-### Perfil: Público Geral (Pendente Detalhamento)
-- Foco em alertas, linguagem simples e impacto social.
+## Status do Desenvolvimento
+- [x] **Protótipo Interativo:** Finalizado e publicado (Desktop & Mobile).
+- [x] **Definição de Fluxos:** Parlamentar e Operador mapeados.
+- [x] **Integração GitHub:** Repositório inicializado e sincronizado.
+- [ ] **Próxima Etapa:** Modelagem do Schema de Banco de Dados no Supabase.
 
-## Backlog
-### Pesquisa e Planejamento
-- [x] Definir stack tecnológica inicial.
-- [ ] Listar URLs dos sites da Câmara, Senado e Diário Oficial.
-- [ ] Mapear estrutura de dados (Schema) para os Projetos de Lei.
-
-### Desenvolvimento do Backend/Crawler
-- [ ] Criar estrutura base do Backend (FastAPI + Supabase SDK).
-- [ ] Implementar Crawler inicial para uma fonte (ex: Câmara dos Deputados).
-- [ ] Configurar tabela de vetores no Supabase (pgvector).
-- [ ] Criar e testar Prompts para detecção de "Jabutis" no Groq.
-- [ ] Implementar pipeline de processamento: Crawler -> RAG -> LLM -> DB.
-
-### Entrega e Mobile
-- [x] Criar protótipo de UI (Simulado em HTML/Tailwind interativo).
-- [ ] Implementar perfil de Parlamentar (Sigla Partido, Flag Líder de Bancada).
-- [ ] Lógica de Orientação: Voto do Líder define orientação para o partido.
-- [ ] Integrar App com a API do Backend.
-- [ ] Configurar GitHub Actions para execução diária do Crawler.
-- [ ] Implementar sistema de alertas via FCM.
+## Backlog Pendente
+- [ ] Listar URLs exatas da API da Câmara e Senado.
+- [ ] Implementar Backend base em FastAPI.
+- [ ] Desenvolver PoC do Crawler com Playwright.
+- [ ] Configurar busca vetorial (RAG) para histórico legislativo.

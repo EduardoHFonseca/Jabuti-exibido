@@ -3,302 +3,414 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jabuti Exibido - Parlamentar</title>
+    <title>Jabuti Exibido - Protótipo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
-        .mobile-frame { max-width: 412px; height: 892px; margin: 20px auto; background: #fff; border: 12px solid #0f172a; border-radius: 48px; overflow: hidden; position: relative; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); display: flex; flex-direction: column; }
-        .screen { display: none; flex-direction: column; flex: 1; overflow-y: auto; }
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; margin: 0; padding: 0; }
+        
+        .mobile-frame { 
+            width: 100%; 
+            height: 100vh; 
+            margin: 0; 
+            background: #fff; 
+            overflow: hidden; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        .screen { display: none; flex-direction: column; flex: 1; overflow: hidden; }
         .screen.active { display: flex; }
         
-        .status-badge { padding: 2px 8px; border-radius: 6px; font-size: 9px; font-weight: 800; text-transform: uppercase; }
-        .badge-new { background: #dcfce7; color: #166534; }
-        .badge-alt { background: #fef9c3; color: #854d0e; }
-        
-        .gradient-bar { height: 12px; border-radius: 6px; background: linear-gradient(to right, #22c55e, #eab308, #ef4444); }
-        .marker { width: 4px; height: 16px; background: #0f172a; border-radius: 2px; position: relative; top: -2px; }
+        .screen-content { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            padding: 16px; 
+            overflow-y: auto; 
+        }
 
-        .vote-btn { transition: all 0.2s; }
-        .vote-btn:active { transform: scale(0.95); }
+        .screen-content::-webkit-scrollbar { width: 4px; }
+        .screen-content::-webkit-scrollbar-track { background: #f1f5f9; }
+        .screen-content::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        .bg-house { background-color: #22c55e; }
+        .bg-operator { background-color: #475569; }
+        .text-high { color: #dc2626; font-weight: bold; }
+        .text-mod { color: #f59e0b; font-weight: bold; }
+        .text-low { color: #16a34a; font-weight: bold; }
+
+        .btn-orientation { font-size: 11px; padding: 6px 0; border-radius: 4px; text-align: center; flex: 1; font-weight: 800; border: 1px solid #cbd5e1; background: #e2e8f0; color: #64748b; transition: all 0.2s; }
+        .btn-orientation.active-red { background: #dc2626; color: white; border-color: #dc2626; }
+        .btn-orientation.active-orange { background: #f59e0b; color: white; border-color: #f59e0b; }
+        .btn-orientation.active-green { background: #22c55e; color: white; border-color: #22c55e; }
+
+        .action-btn { font-size: 12px; font-weight: 800; padding: 12px; border-radius: 8px; color: white; text-transform: uppercase; }
+        .btn-green { background-color: #14532d; }
+        .btn-slate { background-color: #475569; }
+
+        .page-subtitle { font-size: 12px; font-weight: 800; color: #166534; text-align: center; text-transform: uppercase; margin-top: 4px; letter-spacing: 0.05em; }
+        .page-subtitle.operator { color: #334155; }
+
+        .gradient-bar { height: 25px; border-radius: 6px; background: linear-gradient(to right, #22c55e, #eab308, #ef4444); position: relative; margin-top: 8px; }
+        .marker { width: 4px; height: 29px; background: #0f172a; border-radius: 2px; position: absolute; top: -2px; box-shadow: 0 0 4px rgba(0,0,0,0.3); transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        .analysis-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+        .analysis-label { font-size: 10px; font-weight: 900; color: #64748b; text-transform: uppercase; margin-bottom: 4px; display: block; }
+        .analysis-text { font-size: 13px; color: #1e293b; line-height: 1.5; }
+        .jabuti-highlight { background-color: #fee2e2; border-left: 4px solid #ef4444; padding: 8px; color: #991b1b; font-weight: 500; font-style: italic; }
+        
+        .header-container { display: none; }
+        .header-container.visible { display: block; }
+        .console-box { background: #0f172a; color: #38bdf8; font-family: monospace; font-size: 10px; padding: 8px; border-radius: 4px; height: 100px; overflow-y: auto; }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen">
+<body class="min-h-screen">
 
     <div class="mobile-frame">
-        <!-- Status Bar -->
-        <div class="h-10 w-full flex justify-between items-center px-10 text-xs font-semibold text-slate-800 shrink-0">
-            <span>9:41</span>
-            <div class="flex gap-2">
-                <i class="fas fa-signal"></i>
-                <i class="fas fa-wifi"></i>
-                <i class="fas fa-battery-full"></i>
-            </div>
-        </div>
-
-        <!-- 1. TELA DE LOGIN -->
-        <div id="screen-login" class="screen active p-8 flex flex-col justify-center">
-            <div class="w-24 h-24 bg-blue-600 rounded-3xl mx-auto mb-8 flex items-center justify-center text-white text-4xl shadow-lg shadow-blue-200">
-                <i class="fas fa-landmark"></i>
-            </div>
-            
-            <h2 class="text-2xl font-bold text-center text-slate-900 mb-2">Bem-vindo</h2>
-            <p class="text-slate-400 text-sm text-center mb-8">Acesse o painel parlamentar</p>
-
-            <div class="space-y-4 mb-6">
-                <div class="relative">
-                    <i class="far fa-user absolute left-4 top-4 text-slate-400"></i>
-                    <input type="text" placeholder="Usuário" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <!-- HEADER -->
+        <div id="app-header" class="header-container">
+            <div id="header-banner" class="bg-house p-2 mx-1 rounded-sm border shadow-sm shrink-0 flex items-center justify-between px-3">
+                <div id="header-left" class="flex gap-4 items-center">
+                    <button id="btn-parlamentar-home" onclick="changeScreen('home')" class="text-white opacity-80 hover:opacity-100 transition-opacity">
+                        <i class="fas fa-home text-sm"></i>
+                    </button>
+                    <button id="btn-operator-sources" onclick="changeScreen('operator')" class="text-white opacity-80 hover:opacity-100 transition-opacity hidden">
+                        <i class="fas fa-database text-sm"></i>
+                    </button>
+                    <button id="btn-operator-users" onclick="changeScreen('operator-users')" class="text-white opacity-80 hover:opacity-100 transition-opacity hidden">
+                        <i class="fas fa-users text-sm"></i>
+                    </button>
+                    <button id="btn-operator-editor" onclick="changeScreen('operator-editor')" class="text-white opacity-80 hover:opacity-100 transition-opacity hidden">
+                        <i class="fas fa-gavel text-sm"></i>
+                    </button>
                 </div>
-                <div class="relative">
-                    <i class="fas fa-lock absolute left-4 top-4 text-slate-400"></i>
-                    <input type="password" placeholder="Senha" class="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-            </div>
-
-            <button onclick="changeScreen('dashboard')" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-blue-200 active:scale-95 transition-transform mb-8">
-                Entrar
-            </button>
-
-            <!-- Notificações -->
-            <div class="mt-4">
-                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 text-center">Notificações Recentes</p>
-                <div class="space-y-2 opacity-60 pointer-events-none">
-                    <div class="bg-slate-50 p-3 rounded-xl flex justify-between items-center border border-slate-100">
-                        <span class="text-xs font-bold text-slate-700">PL 2630/2020</span>
-                        <span class="status-badge badge-alt">Alterado</span>
-                    </div>
-                    <div class="bg-slate-50 p-3 rounded-xl flex justify-between items-center border border-slate-100">
-                        <span class="text-xs font-bold text-slate-700">PL 2645/2022</span>
-                        <span class="status-badge badge-alt">Alterado</span>
-                    </div>
-                    <div class="bg-slate-50 p-3 rounded-xl flex justify-between items-center border border-slate-100">
-                        <span class="text-xs font-bold text-slate-700">PL 2701/2026</span>
-                        <span class="status-badge badge-new">Novo</span>
-                    </div>
-                </div>
-                <p class="text-[9px] text-center text-blue-600 font-medium mt-3 italic">Faça login para ver detalhes</p>
-            </div>
-        </div>
-
-        <!-- 2. DASHBOARD PARLAMENTAR -->
-        <div id="screen-dashboard" class="screen">
-            <header class="px-6 pt-4 pb-2 shrink-0">
-                <p class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Poder Legislativo</p>
-                <h1 class="text-xl font-black text-slate-900">Câmara dos Deputados</h1>
-            </header>
-
-            <div class="px-6 mb-6">
-                <div class="relative">
-                    <input type="text" placeholder="Buscar projeto (Ex: PL 2630)..." class="w-full bg-slate-100 rounded-2xl py-3 pl-4 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <button class="absolute right-3 top-2.5 w-8 h-8 bg-white rounded-xl shadow-sm text-slate-600">
-                        <i class="fas fa-search text-xs"></i>
+                <h1 id="header-title" class="text-white text-center font-bold text-base tracking-tight uppercase flex-1">Câmara dos Deputados</h1>
+                <div id="header-right" class="flex items-center">
+                    <button onclick="changeScreen('login')" class="text-white opacity-80 hover:opacity-100 transition-opacity">
+                        <i class="fas fa-sign-out-alt text-sm"></i>
                     </button>
                 </div>
             </div>
-
-            <div class="px-6 flex-1 overflow-y-auto pb-8">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-lg font-bold text-slate-900">Em Pauta</h2>
-                    <i class="fas fa-sliders-h text-slate-400 text-sm"></i>
-                </div>
-
-                <div class="space-y-4">
-                    <!-- Item 1 -->
-                    <div class="p-5 bg-white rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4 active:bg-slate-50 transition-colors" onclick="openDetail('PL 2630/2020', 'Regulação de Redes Sociais')">
-                        <div class="flex-1">
-                            <div class="flex gap-2 mb-2">
-                                <span class="status-badge badge-alt">Alterado</span>
-                            </div>
-                            <h3 class="font-bold text-slate-900 text-sm">PL 2630/2020</h3>
-                            <p class="text-[10px] text-slate-400">Combate a desinformação e transparência...</p>
-                        </div>
-                        <i class="fas fa-chevron-right text-slate-300"></i>
-                    </div>
-
-                    <!-- Item 2 -->
-                    <div class="p-5 bg-white rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4" onclick="openDetail('PL 2645/2022', 'Marco Legal da IA')">
-                        <div class="flex-1">
-                            <div class="flex gap-2 mb-2">
-                                <span class="status-badge badge-alt">Alterado</span>
-                            </div>
-                            <h3 class="font-bold text-slate-900 text-sm">PL 2645/2022</h3>
-                            <p class="text-[10px] text-slate-400">Desenvolvimento e uso da IA no Brasil...</p>
-                        </div>
-                        <i class="fas fa-chevron-right text-slate-300"></i>
-                    </div>
-
-                    <!-- Item 3 -->
-                    <div class="p-5 bg-white rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4" onclick="openDetail('PL 2701/2026', 'Incentivo à Tecnologia')">
-                        <div class="flex-1">
-                            <div class="flex gap-2 mb-2">
-                                <span class="status-badge badge-new">Novo</span>
-                            </div>
-                            <h3 class="font-bold text-slate-900 text-sm">PL 2701/2026</h3>
-                            <p class="text-[10px] text-slate-400">Novo regime fiscal para semicondutores...</p>
-                        </div>
-                        <i class="fas fa-chevron-right text-slate-300"></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottom Nav (Fictício para o parlamentar) -->
-            <nav class="h-20 bg-white border-t border-slate-50 px-10 flex justify-between items-center shrink-0">
-                <i class="fas fa-home text-blue-600 text-xl"></i>
-                <i class="fas fa-gavel text-slate-300 text-xl"></i>
-                <i class="far fa-user text-slate-300 text-xl"></i>
-            </nav>
+            <div id="dynamic-subtitle" class="page-subtitle shrink-0">Projetos em Pauta</div>
         </div>
 
-        <!-- 3. DETALHE DO PROJETO E VOTAÇÃO -->
-        <div id="screen-detail" class="screen absolute inset-0 bg-white z-50">
-            <header class="px-6 py-6 flex items-center border-b border-slate-50">
-                <button onclick="changeScreen('dashboard')" class="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-600 mr-4">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-                <div>
-                    <h2 id="detail-pl-num" class="font-black text-lg text-slate-900">PL 2630/2020</h2>
-                    <p id="detail-pl-title" class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Regulação de Streaming</p>
+        <!-- 0. LOGIN -->
+        <div id="screen-login" class="screen active">
+            <div class="screen-content flex flex-col items-center pt-10">
+                <div class="mb-8 text-center">
+                    <div class="w-40 h-40 flex items-center justify-center mx-auto mb-4">
+                        <img src="Jabutis Icon.png" alt="Jabuti Icon" class="w-full h-full object-contain">
+                    </div>
+                    <h1 class="text-2xl font-black text-green-800 leading-none">JABUTI</h1>
+                    <p class="text-xs font-bold text-green-600 tracking-widest uppercase">Exibido</p>
                 </div>
-            </header>
-
-            <div class="flex-1 overflow-y-auto p-6">
-                <!-- Ficha do Projeto -->
-                <div class="bg-slate-50 rounded-3xl p-5 mb-6 border border-slate-100">
-                    <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Ficha do Projeto</h3>
-                    <div class="space-y-3">
-                        <div class="flex justify-between border-b border-slate-200/50 pb-2">
-                            <span class="text-xs text-slate-500">Texto Original</span>
-                            <span class="text-xs font-bold text-slate-900">Não</span>
-                        </div>
-                        <div class="flex justify-between border-b border-slate-200/50 pb-2">
-                            <span class="text-xs text-slate-500">Autoria</span>
-                            <span class="text-xs font-bold text-slate-900">Dep. João Lemos - PSD/TO</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-xs text-slate-500">Regime de Urgência</span>
-                            <span class="text-xs font-bold text-red-600">Sim</span>
-                        </div>
-                    </div>
+                <div class="w-full space-y-3 px-6">
+                    <input type="text" placeholder="Usuário" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none">
+                    <input type="password" placeholder="Senha" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none">
+                    <button onclick="enterAs('parlamentar')" class="w-full action-btn btn-green py-3 mt-2 shadow-lg shadow-green-900/20 active:scale-95 transition-transform">Entrar (Parlamentar)</button>
+                    <button onclick="enterAs('operador')" class="w-full action-btn bg-slate-100 text-slate-600 border border-slate-300 py-3 active:scale-95 transition-transform">Painel de Gestão</button>
                 </div>
-
-                <!-- Orientações -->
-                <div class="space-y-4 mb-8">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Orientação do Partido</span>
-                            <span id="party-orientation-label" class="text-[10px] font-bold text-green-600 uppercase">Aprovar</span>
+                <div class="mt-8 w-full px-4 border-t border-slate-100 pt-6">
+                    <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 text-center">Últimas Atualizações</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center bg-slate-50 p-2 rounded border border-slate-100">
+                            <span class="text-[12px] font-bold text-slate-700">PL 2630/2023</span>
+                            <span class="text-[10px] font-bold text-orange-500 uppercase px-1.5 py-0.5 bg-orange-50 rounded border border-orange-100">Alterado</span>
                         </div>
-                        <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-                            <div id="party-orientation-bar" class="h-full w-full bg-green-500 transition-all duration-500"></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Orientação da Bancada</span>
-                            <span id="bench-orientation-label" class="text-[10px] font-bold text-amber-500 uppercase">Neutra</span>
-                        </div>
-                        <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-                            <div id="bench-orientation-bar" class="h-full w-1/2 bg-amber-400 transition-all duration-500"></div>
+                        <div class="flex justify-between items-center bg-slate-50 p-2 rounded border border-slate-100">
+                            <span class="text-[12px] font-bold text-slate-700">PL 8889/2025</span>
+                            <span class="text-[10px] font-bold text-green-500 uppercase px-1.5 py-0.5 bg-green-50 rounded border border-green-100">Novo</span>
                         </div>
                     </div>
+                    <p class="text-center text-[11px] italic text-slate-400 mt-4">faça login para detalhes</p>
+                </div>
+            </div>
+        </div>
 
+        <!-- 1. HOME (PARLAMENTAR) -->
+        <div id="screen-home" class="screen">
+            <div class="screen-content">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="text-[12px] text-slate-500 flex items-center gap-1">
+                        <i class="fas fa-cloud-sun text-yellow-500"></i> 18° | 31°
+                    </div>
+                    <div class="text-[12px] font-bold text-blue-600">14/11 DF <i class="fas fa-map-marker-alt"></i></div>
+                </div>
+                <div class="space-y-1">
+                    <div onclick="openCapa('PL 2630/23', 'Censura')" class="p-2 border-b border-slate-100 cursor-pointer hover:bg-slate-50">
+                        <p class="text-[13px] font-bold text-green-800">PL 2630/23 – Censura</p>
+                    </div>
+                    <div onclick="openCapa('PL 8889/25', 'Regulação Streaming')" class="p-2 border-b border-slate-100 cursor-pointer bg-slate-50 hover:bg-slate-100">
+                        <p class="text-[13px] font-bold text-green-800">PL 8889/25 – Regulação Streaming</p>
+                    </div>
+                    <div class="p-2 border-b border-slate-100"><p class="text-[13px] font-bold text-green-800">PL 4675/24 – Regulação Mercados Digitais</p></div>
+                    <div class="p-2 border-b border-slate-100"><p class="text-[13px] font-bold text-green-800">PL 5582/25 - Facções</p></div>
+                    <div class="p-2 border-b border-slate-100"><p class="text-[13px] font-bold text-green-800">PEC 231/19 – Fundos Constitucionais</p></div>
+                    <div class="p-2 border-b border-slate-100"><p class="text-[13px] font-bold text-green-800">PEC 18/25 – Segurança Publica</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. CAPA -->
+        <div id="screen-capa" class="screen">
+            <div class="screen-content">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex-1">
+                        <h2 id="capa-num" class="text-base font-black text-green-800 leading-tight">PL 8889/25 – Regulação Streaming</h2>
+                        <p class="text-[12px] text-green-700 font-medium">Publicação:18:11</p>
+                    </div>
+                    <select onchange="updatePartyProfile(this.value)" class="text-[10px] font-bold bg-slate-100 border rounded px-2 py-1 outline-none">
+                        <option value="geral">Perfil: Geral</option>
+                        <option value="novo">Perfil: NOVO</option>
+                        <option value="pt">Perfil: PT</option>
+                        <option value="pl">Perfil: PL</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <p class="text-[12px] font-bold text-slate-900">Autor: <span class="font-normal">Dep. João Lemos - PSD/TO</span></p>
+                    <p class="text-[12px] font-bold text-slate-900 mt-1">Texto Original: <span class="text-high">NÃO</span></p>
+                    <p class="text-[12px] font-bold text-slate-900">Regime de Urgência: <span class="text-high">SIM</span></p>
+                </div>
+                <div class="space-y-4">
                     <div>
-                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 block">Sentimento da Casa</span>
+                        <h3 class="text-center text-[12px] font-black text-green-800 mb-1">Orientação do Partido</h3>
+                        <div class="flex gap-1">
+                            <div id="opt-party-sim" class="btn-orientation">SIM</div>
+                            <div id="opt-party-neutra" class="btn-orientation">NEUTRA</div>
+                            <div id="opt-party-nao" class="btn-orientation active-red">NÃO</div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-[12px] font-black text-green-800 mb-1">Orientação da Bancada</h3>
+                        <div class="flex gap-1">
+                            <div class="btn-orientation">SIM</div>
+                            <div class="btn-orientation active-orange">NEUTRA</div>
+                            <div class="btn-orientation">NÃO</div>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100">
+                        <h3 class="text-center text-[12px] font-black text-green-800 mb-1 italic">Sua inclinação (escolha):</h3>
+                        <div class="flex gap-1">
+                            <div class="btn-orientation active-green">SIM</div>
+                            <div class="btn-orientation">NEUTRA</div>
+                            <div class="btn-orientation">NÃO</div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 id="perception-label" class="text-center text-[12px] font-black text-green-800 mb-1">Percepção da Casa</h3>
                         <div class="gradient-bar px-1 relative">
-                            <div class="marker" style="left: 65%;"></div>
+                            <div id="perception-marker" class="marker" style="left: 75%;"></div>
                         </div>
-                        <div class="flex justify-between mt-1">
-                            <span class="text-[8px] font-bold text-green-600">Aprovar</span>
-                            <span class="text-[8px] font-bold text-red-600">Reprovar</span>
+                        <div class="flex justify-between mt-1 px-1">
+                            <span class="text-[9px] font-bold text-green-600 uppercase tracking-tighter">Favorável</span>
+                            <span class="text-[9px] font-bold text-red-600 uppercase tracking-tighter">Contrário</span>
                         </div>
                     </div>
+                    <div class="pt-2 border-t border-slate-100">
+                        <h3 class="text-left text-[10px] font-black text-slate-400 uppercase mb-1">Notas do Gabinete</h3>
+                        <p class="bg-slate-50 p-2 rounded border text-[11px] text-slate-600 italic">"Atenção especial ao impacto no setor de tecnologia local."</p>
+                    </div>
                 </div>
-
-                <!-- Botões de Voto -->
-                <div class="grid grid-cols-3 gap-3 mb-10">
-                    <button id="btn-approve" onclick="castVote('approve')" class="vote-btn flex flex-col items-center justify-center p-4 bg-green-50 rounded-2xl border border-green-100">
-                        <div class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center mb-2 shadow-md shadow-green-200">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <span class="text-[10px] font-bold text-green-700">Aprovo</span>
-                    </button>
-                    <button id="btn-abstain" onclick="castVote('abstain')" class="vote-btn flex flex-col items-center justify-center p-4 bg-amber-50 rounded-2xl border border-amber-100">
-                        <div class="w-10 h-10 rounded-full bg-amber-400 text-white flex items-center justify-center mb-2 shadow-md shadow-amber-200">
-                            <i class="fas fa-minus"></i>
-                        </div>
-                        <span class="text-[10px] font-bold text-amber-700">Abstenho</span>
-                    </button>
-                    <button id="btn-reject" onclick="castVote('reject')" class="vote-btn flex flex-col items-center justify-center p-4 bg-red-50 rounded-2xl border border-red-100">
-                        <div class="w-10 h-10 rounded-full bg-red-500 text-white flex items-center justify-center mb-2 shadow-md shadow-red-200">
-                            <i class="fas fa-times"></i>
-                        </div>
-                        <span class="text-[10px] font-bold text-red-700">Reprovo</span>
-                    </button>
-                </div>
-
-                <!-- Ações LLM -->
-                <div class="space-y-4">
-                    <button class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-3">
-                        <i class="fas fa-brain text-blue-400"></i>
-                        Ver Detalhes (Análise IA)
-                    </button>
-                    <button class="w-full bg-slate-100 text-slate-900 py-4 rounded-2xl font-bold flex items-center justify-center gap-3">
-                        <i class="far fa-file-alt text-slate-400"></i>
-                        Ver Resumo
-                    </button>
+                <div class="mt-auto grid grid-cols-2 gap-2 pt-4">
+                    <button onclick="changeScreen('detalhe')" class="action-btn btn-green">Ver Detalhes</button>
+                    <button onclick="changeScreen('analise')" class="action-btn btn-green">Ver Análise</button>
                 </div>
             </div>
         </div>
 
+        <!-- 3. DETALHE -->
+        <div id="screen-detalhe" class="screen">
+            <div class="screen-content">
+                <h2 class="text-base font-black text-green-800 leading-tight mb-1">PL 8889/25 – Regulação Streaming</h2>
+                <p class="text-[12px] text-green-700 font-bold mb-4">Este projeto tem os seguintes alertas:</p>
+                <div class="space-y-1 mb-4 flex-1">
+                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Criação de Impostos:</span><span class="text-high">Alto</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Aumento do Estado:</span><span class="text-mod">Moderado</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Censura & Regulação:</span><span class="text-high">Alto</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Cartel & Monopólio:</span><span class="text-mod">Moderado</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Benefício Social:</span><span class="text-low">Baixo</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Impacto Ambiental:</span><span class="text-low">Positivo</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Confusão Jurídica:</span><span class="text-high">Alto</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Fragmentação Norm.:</span><span class="text-mod">Moderado</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Avança competências:</span><span class="text-low">Baixo</span></div>
+                </div>
+                <div class="space-y-2 mb-4">
+                    <button class="w-full action-btn bg-red-600">Ver riscos altos</button>
+                    <button class="w-full action-btn bg-orange-500">Ver riscos moderados</button>
+                </div>
+                <div class="mt-auto grid grid-cols-2 gap-2 pt-4">
+                    <button onclick="changeScreen('capa')" class="action-btn btn-green">Voltar</button>
+                    <button onclick="changeScreen('analise')" class="action-btn btn-green">Ver Análise</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. ANALISE -->
+        <div id="screen-analise" class="screen">
+            <div class="screen-content">
+                <h2 class="text-base font-black text-green-800 leading-tight mb-4">PL 8889/25 – Regulação Streaming</h2>
+                <div class="space-y-4">
+                    <div class="analysis-card"><span class="analysis-label">O que é</span><p class="analysis-text">Marco regulatório para serviços de vídeo sob demanda.</p></div>
+                    <div class="analysis-card"><span class="analysis-label">Onde está o erro (Jabuti)</span><div class="jabuti-highlight">"Art 45. Fica autorizada a criação de taxa adicional..."</div></div>
+                    <div class="analysis-card"><span class="analysis-label">Impacto Técnico</span><p class="analysis-text">Aumento imediato de 15% nos custos de infraestrutura.</p></div>
+                    <div class="analysis-card"><span class="analysis-label">Recomendação</span><p class="analysis-text font-bold text-red-700">Sugerir Destaque de Supressão (DTQ) para o Art. 45.</p></div>
+                    <div class="analysis-card"><span class="analysis-label">Confronto Histórico (RAG)</span><p class="analysis-text">Texto idêntico ao rejeitado na PEC 45/2019.</p></div>
+                </div>
+                <div class="mt-auto grid grid-cols-2 gap-2 pt-4">
+                    <button onclick="changeScreen('detalhe')" class="action-btn btn-green">Voltar</button>
+                    <button onclick="changeScreen('capa')" class="action-btn btn-green">Capa</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. OPERATOR SOURCES -->
+        <div id="screen-operator" class="screen">
+            <div class="screen-content space-y-4">
+                <section class="bg-white p-4 rounded-xl border shadow-sm">
+                    <h3 class="text-xs font-black text-slate-400 uppercase mb-3">Gestão de Fontes & URLs</h3>
+                    <div class="space-y-2">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-2 items-center p-2 bg-slate-50 rounded border">
+                            <div class="col-span-3 text-[11px] font-bold">Câmara dos Deputados</div>
+                            <div class="col-span-4 text-[9px] text-slate-500 truncate">https://dadosabertos.camara.leg.br/api/v2/proposicoes</div>
+                            <div class="col-span-2 text-[10px]">1x por dia</div>
+                            <div class="col-span-1 text-[10px]">12:00hs</div>
+                            <div class="col-span-2 flex justify-end gap-3 text-slate-400">
+                                <i class="fas fa-pause text-[10px]"></i><i class="fas fa-edit text-[10px]"></i><i class="fas fa-trash text-[10px]"></i>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="bg-white p-4 rounded-xl border shadow-sm">
+                    <h3 class="text-xs font-black text-slate-400 uppercase mb-3">Captura Manual</h3>
+                    <div class="flex gap-2">
+                        <input type="text" placeholder="Número do Projeto" class="flex-1 p-2 border rounded text-sm outline-none">
+                        <button onclick="simulateSearch()" class="px-4 py-2 btn-green text-white text-[11px] font-bold rounded uppercase">Buscar Agora</button>
+                    </div>
+                </section>
+                <section><div id="operator-log" class="console-box">[10:15:02] Sistema pronto.</div></section>
+            </div>
+        </div>
+
+        <!-- 6. OPERATOR USERS -->
+        <div id="screen-operator-users" class="screen">
+            <div class="screen-content">
+                <div class="bg-white p-4 rounded-xl border shadow-sm">
+                    <h3 class="text-xs font-black text-slate-400 uppercase mb-3">Usuários</h3>
+                    <p class="text-slate-500 text-xs italic">Gerenciamento em breve.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. OPERATOR EDITOR -->
+        <div id="screen-operator-editor" class="screen">
+            <div class="screen-content p-0 flex flex-row overflow-hidden">
+                <div class="w-1/3 border-r flex flex-col bg-slate-50">
+                    <div class="p-3 border-b bg-white font-black text-[10px] text-slate-400 uppercase">Pendentes</div>
+                    <div class="flex-1 overflow-y-auto p-2">
+                        <div class="p-3 bg-white border rounded-lg border-l-4 border-l-orange-500">
+                            <p class="text-[11px] font-black">PL 8889/2025</p>
+                            <span class="text-[9px] font-bold text-orange-600">85% Suspeita</span>
+                        </div>
+                    </div>
+                    <button class="p-3 text-[10px] font-bold bg-white border-t uppercase">Mais antigos</button>
+                </div>
+                <div class="flex-1 flex flex-col bg-white overflow-hidden">
+                    <div class="p-3 border-b flex justify-between items-center bg-slate-50">
+                        <span class="text-[10px] font-black text-slate-500">Item: 1 de 9</span>
+                        <div class="flex gap-2"><button class="p-1 px-3 border rounded text-[10px]"><i class="fas fa-chevron-left"></i></button><button class="p-1 px-3 border rounded text-[10px]"><i class="fas fa-chevron-right"></i></button></div>
+                    </div>
+                    <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                        <div class="bg-slate-50 p-3 rounded border"><span class="text-[10px] font-black text-slate-400 uppercase">Trecho</span><p class="text-[12px] italic">"...taxa adicional de fiscalização urbana..."</p></div>
+                        <div class="h-32 overflow-y-auto border rounded p-2 bg-slate-100 text-[10px] font-mono">Texto completo...</div>
+                        <textarea class="w-full p-2 text-[12px] border rounded-lg h-20 outline-none" placeholder="Parecer"></textarea>
+                    </div>
+                    <div class="p-4 border-t bg-slate-50 grid grid-cols-2 gap-3">
+                        <button class="action-btn bg-slate-300 text-slate-600">Descartar</button>
+                        <button class="action-btn btn-green">Publicar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
+        const subtitles = {
+            'login': '', 'home': 'Projetos em Pauta', 'capa': 'Ficha Técnica', 'detalhe': 'ANÁLISE IA (Riscos & Alertas)', 
+            'analise': 'Análise Detalhada (LLM)', 'operator': 'Gestão de Fontes', 'operator-users': 'Gestão de Usuários', 'operator-editor': 'Editor de Jabutis'
+        };
+        const partyProfiles = {
+            'geral': { orientation: 'neutra', label: 'Percepção da Casa', marker: '50%' },
+            'novo': { orientation: 'nao', label: 'Percepção do Partido', marker: '90%' },
+            'pt': { orientation: 'sim', label: 'Percepção do Partido', marker: '15%' },
+            'pl': { orientation: 'nao', label: 'Percepção do Partido', marker: '85%' }
+        };
+
+        function enterAs(profile) {
+            const headerLeft = document.getElementById('header-left');
+            const headerBanner = document.getElementById('header-banner');
+            const headerTitle = document.getElementById('header-title');
+            const dynamicSub = document.getElementById('dynamic-subtitle');
+
+            if (profile === 'parlamentar') {
+                headerBanner.className = 'bg-house p-2 mx-1 rounded-sm border shadow-sm shrink-0 flex items-center justify-between px-3';
+                headerTitle.innerText = 'Câmara dos Deputados';
+                dynamicSub.className = 'page-subtitle shrink-0';
+                document.getElementById('btn-parlamentar-home').classList.remove('hidden');
+                document.getElementById('btn-operator-sources').classList.add('hidden');
+                document.getElementById('btn-operator-users').classList.add('hidden');
+                document.getElementById('btn-operator-editor').classList.add('hidden');
+                changeScreen('home');
+            } else {
+                headerBanner.className = 'bg-operator p-2 mx-1 rounded-sm border border-slate-600 shadow-sm shrink-0 flex items-center justify-between px-3';
+                headerTitle.innerText = 'PAINEL DE CONTROLE';
+                dynamicSub.className = 'page-subtitle operator shrink-0';
+                document.getElementById('btn-parlamentar-home').classList.add('hidden');
+                document.getElementById('btn-operator-sources').classList.remove('hidden');
+                document.getElementById('btn-operator-users').classList.remove('hidden');
+                document.getElementById('btn-operator-editor').classList.remove('hidden');
+                changeScreen('operator');
+            }
+        }
+
         function changeScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('screen-' + screenId).classList.add('active');
-        }
-
-        function openDetail(num, title) {
-            document.getElementById('detail-pl-num').innerText = num;
-            document.getElementById('detail-pl-title').innerText = title;
-            changeScreen('detail');
-        }
-
-        function castVote(type) {
-            const label = document.getElementById('party-orientation-label');
-            const bar = document.getElementById('party-orientation-bar');
-            
-            // Reset button styles
-            document.querySelectorAll('.vote-btn').forEach(btn => {
-                btn.style.opacity = "0.5";
-                btn.style.borderWidth = "1px";
-            });
-
-            if (type === 'approve') {
-                label.innerText = "Aprovar";
-                label.className = "text-[10px] font-bold text-green-600 uppercase";
-                bar.className = "h-full w-full bg-green-500 transition-all duration-500";
-                document.getElementById('btn-approve').style.opacity = "1";
-                document.getElementById('btn-approve').style.borderWidth = "2px";
-                document.getElementById('btn-approve').style.borderColor = "#22c55e";
-            } else if (type === 'abstain') {
-                label.innerText = "Neutra";
-                label.className = "text-[10px] font-bold text-amber-500 uppercase";
-                bar.className = "h-full w-1/2 bg-amber-400 transition-all duration-500";
-                document.getElementById('btn-abstain').style.opacity = "1";
-                document.getElementById('btn-abstain').style.borderWidth = "2px";
-                document.getElementById('btn-abstain').style.borderColor = "#fbbf24";
-            } else if (type === 'reject') {
-                label.innerText = "Reprovar";
-                label.className = "text-[10px] font-bold text-red-600 uppercase";
-                bar.className = "h-full w-full bg-red-500 transition-all duration-500";
-                document.getElementById('btn-reject').style.opacity = "1";
-                document.getElementById('btn-reject').style.borderWidth = "2px";
-                document.getElementById('btn-reject').style.borderColor = "#ef4444";
+            const target = document.getElementById('screen-' + screenId);
+            if (target) {
+                target.classList.add('active');
+                const header = document.getElementById('app-header');
+                if (screenId === 'login') header.classList.remove('visible');
+                else {
+                    header.classList.add('visible');
+                    document.getElementById('dynamic-subtitle').innerText = subtitles[screenId];
+                }
             }
+        }
+
+        function openCapa(num, title) {
+            document.getElementById('capa-num').innerText = num + " – " + title;
+            document.querySelectorAll('#screen-detalhe h2, #screen-analise h2').forEach(h2 => h2.innerText = num + " – " + title);
+            changeScreen('capa');
+        }
+
+        function updatePartyProfile(party) {
+            const profile = partyProfiles[party];
+            document.getElementById('perception-label').innerText = profile.label;
+            document.getElementById('perception-marker').style.left = profile.marker;
+            const partyBtns = ['opt-party-sim', 'opt-party-neutra', 'opt-party-nao'];
+            partyBtns.forEach(id => document.getElementById(id).className = 'btn-orientation');
+            const activeBtn = document.getElementById('opt-party-' + profile.orientation);
+            if (profile.orientation === 'sim') activeBtn.classList.add('active-green');
+            else if (profile.orientation === 'neutra') activeBtn.classList.add('active-orange');
+            else if (profile.orientation === 'nao') activeBtn.classList.add('active-red');
+        }
+
+        function simulateSearch() {
+            const log = document.getElementById('operator-log');
+            log.innerHTML += `<br>[${new Date().toLocaleTimeString()}] Iniciando busca...`;
+            setTimeout(() => { log.innerHTML += `<br>[${new Date().toLocaleTimeString()}] Projeto capturado.`; log.scrollTop = log.scrollHeight; }, 1000);
         }
     </script>
 </body>

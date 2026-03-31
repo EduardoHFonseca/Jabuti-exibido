@@ -1,0 +1,16 @@
+{
+  "publishes": {
+    "marble-willow-pfvm": {
+      "siteUrl": "https://marble-willow-pfvm.here.now/"
+    },
+    "flowing-kettle-2cbt": {
+      "siteUrl": "https://flowing-kettle-2cbt.here.now/",
+      "claimToken": "dc0c3e9c6d48336310112f70c47a9293fcbe43fbbd466c547c0cc01d16f7b5a0",
+      "claimUrl": "https://here.now/claim?slug=flowing-kettle-2cbt&token=dc0c3e9c6d48336310112f70c47a9293fcbe43fbbd466c547c0cc01d16f7b5a0",
+      "expiresAt": "2026-04-01T12:59:15.571Z"
+    },
+    "fern-gable-pff7": {
+      "siteUrl": "https://fern-gable-pff7.here.now/"
+    }
+  }
+}
