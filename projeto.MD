@@ -5,12 +5,14 @@ O projeto **Jabuti Exibido** monitora projetos de lei em sites governamentais at
 
 ## Funcionalidades Principais
 - **Web Crawler:** Varredura periódica de sites (Câmara, Senado, DOU).
-- **RAG System:** Busca semântica baseada na Constituição Federal, leis vigentes e histórico de projetos rejeitados.
+- **RAG System (Detector de Reencarnação):** Busca semântica e comparação de embeddings a nível de artigo para detectar reintrodução de textos rejeitados ou já votados.
+- **Snapshotting & Versionamento:** Captura e armazenamento de todas as versões de um PL (Original, Substitutivos, Emendas) para detectar fatiamento legislativo e mudanças súbitas de texto.
+- **Memória do Parlamentar:** Cruzamento automático do texto atual com o histórico de votos do usuário, sinalizando alinhamento ou contradição com posições passadas.
 - **LLM Processing:** 
   - Identificação de "Jabutis" (contrabando legislativo).
-  - **9 Quesitos de Análise IA:** Criação de Impostos, Aumento do Estado, Censura & Regulação, Cartel & Monopólio, Benefício Social, Impacto Ambiental, Confusão Jurídica, Fragmentação Normativa e Avança competências.
+  - **9 Quesitos de Análise IA:** Criação de Impostos, Aumento do Estado, Censura & Regulação, Cartel & Monopólio, Benefício Social, Impacto Ambiental, Confusão Jurídica, Fragmentação Normativa e Cria discricionariedade.
   - **Customização por Partido:** Filtros ideológicos e técnicos específicos por agremiação (ex: NOVO, PT, PL).
-  - **Comparação Histórica:** Detecção de reintrodução de textos (fatiamento legislativo).
+  - **Comparação Histórica (Deep Diff):** Detecção de fatiamento através da comparação entre versões do mesmo projeto.
 - **Integração Mobile:** Interface de alta legibilidade para consulta de pauta e alertas em tempo real.
 
 ## Arquitetura e Stack Técnica
@@ -29,11 +31,18 @@ O projeto **Jabuti Exibido** monitora projetos de lei em sites governamentais at
 - **Projetos em Pauta:** Lista simplificada com títulos curtos e status.
 - **Ficha Técnica (Capa):** 
     - Identificação: Nro, Autor, Estado, Regime de Urgência.
+    - **Alerta de DNA Legislativo:** Badge de alerta rápido na capa caso haja reencarnação de texto detectada.
     - Orientações: Partido, Bancada e sua inclinação pessoal.
     - **Percepção da Casa/Partido:** Slider gradiente (Verde/Amarelo/Vermelho) dinâmico por perfil.
     - **Notas do Gabinete:** Espaço para comentários internos.
-- **Análise IA (Riscos & Alertas):** Lista de 9 quesitos com níveis de risco (Alto, Moderado, Baixo) e Impacto Ambiental (Positivo, Neutro, Negativo).
+- **Análise IA (Riscos & Alertas):** Lista de 9 quesitos com níveis de risco (Alto, Moderado, Baixo) e Impacto Ambiental.
+    - **Alerta de Reencarnação:** Indicador visual específico. 
+        - Botão Vermelho com contador (ex: [2]) se houver fatiamento detectado.
+        - Botão Verde com [0] se o texto for inédito/limpo.
 - **Parecer Técnico (Análise Detalhada):** Estrutura modular (O que é, Jabuti Detectado, Impacto Técnico, Recomendação, Confronto RAG).
+    - **Card de Reencarnação (Sub-tela):** Mesma diagramação de riscos altos/moderados, detalhando o histórico do DNA do texto:
+        - *Exemplo 1:* "Capítulo IV, art.18 foi tentado no PL 2345/2017 votado em Out.21 (rejeitado) e na PEC 23/2019 votada em Abril 22 (vetada)".
+        - *Exemplo 2:* "Seção II, art.5º (Regulação de IA) identificado como cópia integral do Substitutivo do PL 456/2021, retirado de pauta por falta de quórum em Dez.23".
 
 ### 2. Perfil Operador / Gestor
 - **Gestão de Fontes:** Grid de URLs com controle de periodicidade e horário de busca.
@@ -47,8 +56,19 @@ O projeto **Jabuti Exibido** monitora projetos de lei em sites governamentais at
 - [x] **Integração GitHub:** Repositório inicializado e sincronizado.
 - [ ] **Próxima Etapa:** Modelagem do Schema de Banco de Dados no Supabase.
 
+- [ ] **Chat Contextual:** Interface de diálogo para perguntas e respostas sobre o projeto.
+- [ ] **Filtros por Tema (IA):** Subitens na tela de riscos para perguntas rápidas sugeridas.
+
 ## Backlog Pendente
-- [ ] Listar URLs exatas da API da Câmara e Senado.
-- [ ] Implementar Backend base em FastAPI.
-- [ ] Desenvolver PoC do Crawler com Playwright.
-- [ ] Configurar busca vetorial (RAG) para histórico legislativo.
+- [ ] **Mapeamento de APIs:** Listar URLs da API da Câmara e Senado, focando em "Inteiro Teor" e histórico de votações.
+- [ ] **Schema do Banco (Supabase):** Modelagem de tabelas para `proposicao_versoes` e `vetores_legislativos`.
+- [ ] **PoC do Crawler (Playwright):** Script para captura de PDFs e textos de múltiplas versões de um projeto.
+- [ ] **Configuração pgvector:** Implementar a lógica de busca por "Reencarnação" de artigos.
+- [ ] **Backend Base (FastAPI):** Estrutura inicial para servir dados e integrar com LLM.
+- [ ] **Sugestões Rápidas de IA:** Organizar como subitens na tela de riscos e alertas.
+
+## Conclusões Técnicas de Pré-Projeto
+1. **Infraestrutura:** O sistema requer execução 24/7 para crawlers agendados e processamento assíncrono de RAG.
+2. **Escalabilidade:** O uso de embeddings por artigo (chunking granular) é essencial para detectar fatiamento e reencarnação de textos em diferentes projetos.
+3. **Persistência Offline (PWA):** O front-end deve suportar cache local (Local Storage) para permitir consulta de pautas e análises em ambientes sem conexão.
+4. **Segurança de Dados:** Armazenamento do histórico de votos do parlamentar para cruzamento de dados e alertas personalizados de consistência política.

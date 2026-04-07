@@ -8,13 +8,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #e2e8f0; margin: 0; padding: 0; }
         
         .mobile-frame { 
             width: 100%; 
             height: 100vh; 
             margin: 0; 
-            background: #fff; 
+            background: #e2e8f0; 
             overflow: hidden; 
             position: relative; 
             display: flex; 
@@ -30,25 +30,32 @@
             flex-direction: column; 
             padding: 16px; 
             overflow-y: auto; 
+            background-color: #e2e8f0;
         }
 
         .screen-content::-webkit-scrollbar { width: 4px; }
         .screen-content::-webkit-scrollbar-track { background: #f1f5f9; }
         .screen-content::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
-        .bg-house { background-color: #22c55e; }
-        .bg-operator { background-color: #475569; }
+        .bg-house { background-color: #14532d; }
+        .bg-operator { background-color: #334155; }
         .text-high { color: #dc2626; font-weight: bold; }
         .text-mod { color: #f59e0b; font-weight: bold; }
         .text-low { color: #16a34a; font-weight: bold; }
 
+        .risk-badge { font-size: 10px; font-weight: 800; text-transform: uppercase; padding: 2px 8px; border-radius: 9999px; border-width: 1px; min-width: 70px; text-align: center; }
+        .badge-high { color: #dc2626; background-color: #fef2f2; border-color: #fecaca; }
+        .badge-mod { color: #d97706; background-color: #fffbeb; border-color: #fef3c7; }
+        .badge-low { color: #16a34a; background-color: #f0fdf4; border-color: #dcfce7; }
+
         .btn-orientation { font-size: 11px; padding: 6px 0; border-radius: 4px; text-align: center; flex: 1; font-weight: 800; border: 1px solid #cbd5e1; background: #e2e8f0; color: #64748b; transition: all 0.2s; }
         .btn-orientation.active-red { background: #dc2626; color: white; border-color: #dc2626; }
         .btn-orientation.active-orange { background: #f59e0b; color: white; border-color: #f59e0b; }
-        .btn-orientation.active-green { background: #22c55e; color: white; border-color: #22c55e; }
+        .btn-orientation.active-green { background: #14532d; color: white; border-color: #14532d; }
 
         .action-btn { font-size: 12px; font-weight: 800; padding: 12px; border-radius: 8px; color: white; text-transform: uppercase; }
         .btn-green { background-color: #14532d; }
+        .btn-blue { background-color: #003594; }
         .btn-slate { background-color: #475569; }
 
         .page-subtitle { font-size: 12px; font-weight: 800; color: #166534; text-align: center; text-transform: uppercase; margin-top: 4px; letter-spacing: 0.05em; }
@@ -62,8 +69,15 @@
         .analysis-text { font-size: 13px; color: #1e293b; line-height: 1.5; }
         .jabuti-highlight { background-color: #fee2e2; border-left: 4px solid #ef4444; padding: 8px; color: #991b1b; font-weight: 500; font-style: italic; }
         
+        /* Chat Styles */
+        .chat-bubble { max-width: 85%; padding: 10px 14px; border-radius: 16px; font-size: 13px; line-height: 1.4; margin-bottom: 8px; }
+        .bubble-user { background-color: #22c55e; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .bubble-bot { background-color: #f1f5f9; color: #1e293b; align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #e2e8f0; }
+        
         .header-container { display: none; }
         .header-container.visible { display: block; }
+        .text-dark-green { color: #14532d; }
+        .text-flag-blue { color: #003594; }
         .console-box { background: #0f172a; color: #38bdf8; font-family: monospace; font-size: 10px; padding: 8px; border-radius: 4px; height: 100px; overflow-y: auto; }
     </style>
 </head>
@@ -104,23 +118,23 @@
                     <div class="w-40 h-40 flex items-center justify-center mx-auto mb-4">
                         <img src="Jabutis Icon.png" alt="Jabuti Icon" class="w-full h-full object-contain">
                     </div>
-                    <h1 class="text-2xl font-black text-green-800 leading-none">JABUTI</h1>
+                    <h1 class="text-2xl font-black text-dark-green leading-none">JABUTI</h1>
                     <p class="text-xs font-bold text-green-600 tracking-widest uppercase">Exibido</p>
                 </div>
                 <div class="w-full space-y-3 px-6">
-                    <input type="text" placeholder="Usuário" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none">
-                    <input type="password" placeholder="Senha" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none">
+                    <input type="text" placeholder="Usuário" class="w-full p-3 bg-slate-200 border border-slate-200 rounded-lg text-sm outline-none">
+                    <input type="password" placeholder="Senha" class="w-full p-3 bg-slate-200 border border-slate-200 rounded-lg text-sm outline-none">
                     <button onclick="enterAs('parlamentar')" class="w-full action-btn btn-green py-3 mt-2 shadow-lg shadow-green-900/20 active:scale-95 transition-transform">Entrar (Parlamentar)</button>
                     <button onclick="enterAs('operador')" class="w-full action-btn bg-slate-100 text-slate-600 border border-slate-300 py-3 active:scale-95 transition-transform">Painel de Gestão</button>
                 </div>
                 <div class="mt-8 w-full px-4 border-t border-slate-100 pt-6">
                     <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 text-center">Últimas Atualizações</h3>
                     <div class="space-y-2">
-                        <div class="flex justify-between items-center bg-slate-50 p-2 rounded border border-slate-100">
+                        <div class="flex justify-between items-center bg-slate-200 p-2 rounded border border-slate-100">
                             <span class="text-[12px] font-bold text-slate-700">PL 2630/2023</span>
                             <span class="text-[10px] font-bold text-orange-500 uppercase px-1.5 py-0.5 bg-orange-50 rounded border border-orange-100">Alterado</span>
                         </div>
-                        <div class="flex justify-between items-center bg-slate-50 p-2 rounded border border-slate-100">
+                        <div class="flex justify-between items-center bg-slate-200 p-2 rounded border border-slate-100">
                             <span class="text-[12px] font-bold text-slate-700">PL 8889/2025</span>
                             <span class="text-[10px] font-bold text-green-500 uppercase px-1.5 py-0.5 bg-green-50 rounded border border-green-100">Novo</span>
                         </div>
@@ -140,16 +154,16 @@
                     <div class="text-[12px] font-bold text-blue-600">14/11 DF <i class="fas fa-map-marker-alt"></i></div>
                 </div>
                 <div class="space-y-1">
-                    <div onclick="openCapa('PL 2630/23', 'Censura')" class="p-2 border-b border-slate-100 cursor-pointer hover:bg-slate-50">
-                        <p class="text-[13px] font-bold text-green-800">PL 2630/23 – Censura</p>
+                    <div onclick="openCapa('PL 2630/23', 'Censura')" class="p-2 border-b border-slate-100 cursor-pointer hover:bg-slate-200">
+                        <p class="text-[13px] font-bold text-dark-green">PL 2630/23 – Censura</p>
                     </div>
-                    <div onclick="openCapa('PL 8889/25', 'Regulação Streaming')" class="p-2 border-b border-slate-100 cursor-pointer bg-slate-50 hover:bg-slate-100">
-                        <p class="text-[13px] font-bold text-green-800">PL 8889/25 – Regulação Streaming</p>
+                    <div onclick="openCapa('PL 8889/25', 'Regulação Streaming')" class="p-2 border-b border-slate-100 cursor-pointer bg-slate-200 hover:bg-slate-100">
+                        <p class="text-[13px] font-bold text-dark-green">PL 8889/25 – Regulação Streaming</p>
                     </div>
-                    <div class="p-2 border-b border-slate-100"><p class="text-[13px] font-bold text-green-800">PL 4675/24 – Regulação Mercados Digitais</p></div>
-                    <div class="p-2 border-b border-slate-100"><p class="text-[13px] font-bold text-green-800">PL 5582/25 - Facções</p></div>
-                    <div class="p-2 border-b border-slate-100"><p class="text-[13px] font-bold text-green-800">PEC 231/19 – Fundos Constitucionais</p></div>
-                    <div class="p-2 border-b border-slate-100"><p class="text-[13px] font-bold text-green-800">PEC 18/25 – Segurança Publica</p></div>
+                    <div class="p-2 border-b border-slate-100"><p class="text-[13px] font-bold text-dark-green">PL 4675/24 – Regulação Mercados Digitais</p></div>
+                    <div class="p-2 border-b border-slate-100"><p class="text-[13px] font-bold text-dark-green">PL 5582/25 - Facções</p></div>
+                    <div class="p-2 border-b border-slate-100"><p class="text-[13px] font-bold text-dark-green">PEC 231/19 – Fundos Constitucionais</p></div>
+                    <div class="p-2 border-b border-slate-100"><p class="text-[13px] font-bold text-dark-green">PEC 18/25 – Segurança Publica</p></div>
                 </div>
             </div>
         </div>
@@ -159,7 +173,7 @@
             <div class="screen-content">
                 <div class="flex justify-between items-start mb-4">
                     <div class="flex-1">
-                        <h2 id="capa-num" class="text-base font-black text-green-800 leading-tight">PL 8889/25 – Regulação Streaming</h2>
+                        <h2 id="capa-num" class="text-base font-black text-dark-green leading-tight mb-1">PL 8889/25 – Regulação Streaming</h2>
                         <p class="text-[12px] text-green-700 font-medium">Publicação:18:11</p>
                     </div>
                     <select onchange="updatePartyProfile(this.value)" class="text-[10px] font-bold bg-slate-100 border rounded px-2 py-1 outline-none">
@@ -169,14 +183,19 @@
                         <option value="pl">Perfil: PL</option>
                     </select>
                 </div>
-                <div class="mb-4">
-                    <p class="text-[12px] font-bold text-slate-900">Autor: <span class="font-normal">Dep. João Lemos - PSD/TO</span></p>
-                    <p class="text-[12px] font-bold text-slate-900 mt-1">Texto Original: <span class="text-high">NÃO</span></p>
-                    <p class="text-[12px] font-bold text-slate-900">Regime de Urgência: <span class="text-high">SIM</span></p>
+                <div class="mb-4 flex justify-between items-end">
+                    <div>
+                        <p class="text-[12px] font-bold text-slate-900">Autor: <span class="font-normal">Dep. João Lemos - PSD/TO</span></p>
+                        <p class="text-[12px] font-bold text-slate-900 mt-1">Texto Original: <span class="text-high">NÃO</span></p>
+                        <p class="text-[12px] font-bold text-slate-900">Regime de Urgência: <span class="text-high">SIM</span></p>
+                    </div>
+                    <div id="badge-dna" class="bg-red-600 text-white text-[10px] font-black px-2 py-1.5 rounded shadow-md animate-pulse mb-0.5">
+                        <i class="fas fa-dna mr-1"></i> DNA REPETIDO
+                    </div>
                 </div>
                 <div class="space-y-4">
                     <div>
-                        <h3 class="text-center text-[12px] font-black text-green-800 mb-1">Orientação do Partido</h3>
+                        <h3 class="text-center text-[12px] font-black text-dark-green mb-1">Orientação do Partido</h3>
                         <div class="flex gap-1">
                             <div id="opt-party-sim" class="btn-orientation">SIM</div>
                             <div id="opt-party-neutra" class="btn-orientation">NEUTRA</div>
@@ -184,7 +203,7 @@
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-[12px] font-black text-green-800 mb-1">Orientação da Bancada</h3>
+                        <h3 class="text-center text-[12px] font-black text-dark-green mb-1">Orientação da Bancada</h3>
                         <div class="flex gap-1">
                             <div class="btn-orientation">SIM</div>
                             <div class="btn-orientation active-orange">NEUTRA</div>
@@ -192,15 +211,15 @@
                         </div>
                     </div>
                     <div class="pt-2 border-t border-slate-100">
-                        <h3 class="text-center text-[12px] font-black text-green-800 mb-1 italic">Sua inclinação (escolha):</h3>
+                        <h3 class="text-center text-[12px] font-black text-dark-green mb-1 italic">Sua inclinação (escolha):</h3>
                         <div class="flex gap-1">
                             <div class="btn-orientation active-green">SIM</div>
-                            <div class="btn-orientation">NEUTRA</div>
+                            <div class="btn-orientation">ABSTER</div>
                             <div class="btn-orientation">NÃO</div>
                         </div>
                     </div>
                     <div>
-                        <h3 id="perception-label" class="text-center text-[12px] font-black text-green-800 mb-1">Percepção da Casa</h3>
+                        <h3 id="perception-label" class="text-center text-[12px] font-black text-dark-green mb-1">Percepção da Casa</h3>
                         <div class="gradient-bar px-1 relative">
                             <div id="perception-marker" class="marker" style="left: 75%;"></div>
                         </div>
@@ -211,12 +230,13 @@
                     </div>
                     <div class="pt-2 border-t border-slate-100">
                         <h3 class="text-left text-[10px] font-black text-slate-400 uppercase mb-1">Notas do Gabinete</h3>
-                        <p class="bg-slate-50 p-2 rounded border text-[11px] text-slate-600 italic">"Atenção especial ao impacto no setor de tecnologia local."</p>
+                        <p class="bg-slate-200 p-2 rounded border text-[11px] text-slate-600 italic">"Atenção especial ao impacto no setor de tecnologia local."</p>
                     </div>
                 </div>
-                <div class="mt-auto grid grid-cols-2 gap-2 pt-4">
-                    <button onclick="changeScreen('detalhe')" class="action-btn btn-green">Ver Detalhes</button>
-                    <button onclick="changeScreen('analise')" class="action-btn btn-green">Ver Análise</button>
+                <div class="mt-auto grid grid-cols-3 gap-2 pt-4">
+                    <button onclick="changeScreen('detalhe')" class="action-btn btn-green">Detalhes</button>
+                    <button onclick="changeScreen('chat')" class="action-btn btn-blue">Consultar IA</button>
+                    <button onclick="changeScreen('analise')" class="action-btn btn-green">Análise</button>
                 </div>
             </div>
         </div>
@@ -224,26 +244,28 @@
         <!-- 3. DETALHE -->
         <div id="screen-detalhe" class="screen">
             <div class="screen-content">
-                <h2 class="text-base font-black text-green-800 leading-tight mb-1">PL 8889/25 – Regulação Streaming</h2>
+                <h2 class="text-base font-black text-dark-green leading-tight mb-1">PL 8889/25 – Regulação Streaming</h2>
                 <p class="text-[12px] text-green-700 font-bold mb-4">Este projeto tem os seguintes alertas:</p>
                 <div class="space-y-1 mb-4 flex-1">
-                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Criação de Impostos:</span><span class="text-high">Alto</span></div>
-                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Aumento do Estado:</span><span class="text-mod">Moderado</span></div>
-                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Censura & Regulação:</span><span class="text-high">Alto</span></div>
-                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Cartel & Monopólio:</span><span class="text-mod">Moderado</span></div>
-                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Benefício Social:</span><span class="text-low">Baixo</span></div>
-                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Impacto Ambiental:</span><span class="text-low">Positivo</span></div>
-                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Confusão Jurídica:</span><span class="text-high">Alto</span></div>
-                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Fragmentação Norm.:</span><span class="text-mod">Moderado</span></div>
-                    <div class="flex justify-between items-center text-[13px] py-1 border-b border-slate-50"><span class="text-green-900">Avança competências:</span><span class="text-low">Baixo</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1.5 border-b border-slate-100"><span class="text-dark-green font-medium">Reencarnação de texto:</span><button onclick="changeScreen('reincarnacao')" class="bg-red-600 text-white font-bold px-4 py-0.5 rounded-full text-[11px] hover:bg-red-700 transition-colors shadow-sm">[2]</button></div>
+                    <div class="flex justify-between items-center text-[13px] py-1.5 border-b border-slate-100"><span class="text-dark-green font-medium">Criação de Impostos:</span><span class="risk-badge badge-high">Alto</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1.5 border-b border-slate-100"><span class="text-dark-green font-medium">Aumento do Estado:</span><span class="risk-badge badge-mod">Moderado</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1.5 border-b border-slate-100"><span class="text-dark-green font-medium">Censura & Regulação:</span><span class="risk-badge badge-high">Alto</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1.5 border-b border-slate-100"><span class="text-dark-green font-medium">Cartel & Monopólio:</span><span class="risk-badge badge-mod">Moderado</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1.5 border-b border-slate-100"><span class="text-dark-green font-medium">Benefício Social:</span><span class="risk-badge badge-low">Baixo</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1.5 border-b border-slate-100"><span class="text-dark-green font-medium">Impacto Ambiental:</span><span class="risk-badge badge-low">Positivo</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1.5 border-b border-slate-100"><span class="text-dark-green font-medium">Confusão Jurídica:</span><span class="risk-badge badge-high">Alto</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1.5 border-b border-slate-100"><span class="text-dark-green font-medium">Fragmentação Norm.:</span><span class="risk-badge badge-mod">Moderado</span></div>
+                    <div class="flex justify-between items-center text-[13px] py-1.5 border-b border-slate-100"><span class="text-dark-green font-medium">Cria discricionariedade:</span><span class="risk-badge badge-low">Baixo</span></div>
                 </div>
                 <div class="space-y-2 mb-4">
-                    <button class="w-full action-btn bg-red-600">Ver riscos altos</button>
-                    <button class="w-full action-btn bg-orange-500">Ver riscos moderados</button>
+                    <button onclick="changeScreen('riscos-altos')" class="w-full action-btn bg-red-600">Ver riscos altos</button>
+                    <button onclick="changeScreen('riscos-moderados')" class="w-full action-btn bg-orange-500">Ver riscos moderados</button>
                 </div>
-                <div class="mt-auto grid grid-cols-2 gap-2 pt-4">
+                <div class="mt-auto grid grid-cols-3 gap-2 pt-4">
                     <button onclick="changeScreen('capa')" class="action-btn btn-green">Voltar</button>
-                    <button onclick="changeScreen('analise')" class="action-btn btn-green">Ver Análise</button>
+                    <button onclick="changeScreen('chat')" class="action-btn btn-blue">Consultar IA</button>
+                    <button onclick="changeScreen('analise')" class="action-btn btn-green">Análise</button>
                 </div>
             </div>
         </div>
@@ -251,7 +273,7 @@
         <!-- 4. ANALISE -->
         <div id="screen-analise" class="screen">
             <div class="screen-content">
-                <h2 class="text-base font-black text-green-800 leading-tight mb-4">PL 8889/25 – Regulação Streaming</h2>
+                <h2 class="text-base font-black text-dark-green leading-tight mb-4">PL 8889/25 – Regulação Streaming</h2>
                 <div class="space-y-4">
                     <div class="analysis-card"><span class="analysis-label">O que é</span><p class="analysis-text">Marco regulatório para serviços de vídeo sob demanda.</p></div>
                     <div class="analysis-card"><span class="analysis-label">Onde está o erro (Jabuti)</span><div class="jabuti-highlight">"Art 45. Fica autorizada a criação de taxa adicional..."</div></div>
@@ -259,9 +281,100 @@
                     <div class="analysis-card"><span class="analysis-label">Recomendação</span><p class="analysis-text font-bold text-red-700">Sugerir Destaque de Supressão (DTQ) para o Art. 45.</p></div>
                     <div class="analysis-card"><span class="analysis-label">Confronto Histórico (RAG)</span><p class="analysis-text">Texto idêntico ao rejeitado na PEC 45/2019.</p></div>
                 </div>
+                <div class="mt-auto grid grid-cols-3 gap-2 pt-4">
+                    <button onclick="changeScreen('detalhe')" class="action-btn btn-green">Voltar</button>
+                    <button onclick="changeScreen('chat')" class="action-btn btn-blue">Consultar IA</button>
+                    <button onclick="changeScreen('capa')" class="action-btn btn-green">Capa</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4.1 RISCOS ALTOS -->
+        <div id="screen-riscos-altos" class="screen">
+            <div class="screen-content">
+                <h2 class="text-base font-black text-red-600 leading-tight mb-4 tracking-tight">PL 8889/25 – Regulação Streaming</h2>
+                <div class="space-y-4">
+                    <div class="analysis-card border-l-4 border-l-red-600">
+                        <span class="analysis-label text-red-600">Censura & Regulação</span>
+                        <p class="analysis-text">O projeto cria um órgão com atribuição de remover publicações de internet sem precisar recorrer ao judiciário, o que fere a liberdade de expressão.</p>
+                    </div>
+                    <div class="analysis-card border-l-4 border-l-red-600">
+                        <span class="analysis-label text-red-600">Confusão Jurídica</span>
+                        <p class="analysis-text">O texto sobrepõe-se a normas vigentes. Já existem as leis <b>XXXX/AA</b> e <b>YYYY/AA</b> que dispõem sobre o mesmo tema, gerando insegurança.</p>
+                    </div>
+                </div>
                 <div class="mt-auto grid grid-cols-2 gap-2 pt-4">
                     <button onclick="changeScreen('detalhe')" class="action-btn btn-green">Voltar</button>
-                    <button onclick="changeScreen('capa')" class="action-btn btn-green">Capa</button>
+                    <button onclick="changeScreen('chat')" class="action-btn btn-blue">Consultar IA</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4.2 RISCOS MODERADOS -->
+        <div id="screen-riscos-moderados" class="screen">
+            <div class="screen-content">
+                <h2 class="text-base font-black text-orange-600 leading-tight mb-4 tracking-tight">PL 8889/25 – Regulação Streaming</h2>
+                <div class="space-y-4">
+                    <div class="analysis-card border-l-4 border-l-orange-500">
+                        <span class="analysis-label text-orange-600">Aumento do Estado</span>
+                        <p class="analysis-text">Identificada a criação de novos cargos e estrutura administrativa desnecessária para a fiscalização do setor.</p>
+                    </div>
+                    <div class="analysis-card border-l-4 border-l-orange-500">
+                        <span class="analysis-label text-orange-600">Fragmentação Normativa</span>
+                        <p class="analysis-text">O fatiamento de competências entre diferentes órgãos pode dificultar a conformidade das empresas de tecnologia.</p>
+                    </div>
+                </div>
+                <div class="mt-auto grid grid-cols-2 gap-2 pt-4">
+                    <button onclick="changeScreen('detalhe')" class="action-btn btn-green">Voltar</button>
+                    <button onclick="changeScreen('chat')" class="action-btn btn-blue">Consultar IA</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4.3 REENCARNAÇÃO DE TEXTO -->
+        <div id="screen-reincarnacao" class="screen">
+            <div class="screen-content">
+                <h2 class="text-base font-black text-red-600 leading-tight mb-4 tracking-tight">PL 8889/25 – Regulação Streaming</h2>
+                <div class="space-y-4">
+                    <div class="analysis-card border-l-4 border-l-red-600">
+                        <span class="analysis-label text-red-600">Reencarnação Detectada</span>
+                        <p class="analysis-text"><b>Capítulo IV, art.18</b> foi tentado no <b>PL 2345/2017</b> votado em Out.21 (rejeitado) e na <b>PEC 23/2019</b> votada em Abril 22 (vetada).</p>
+                    </div>
+                    <div class="analysis-card border-l-4 border-l-red-600">
+                        <span class="analysis-label text-red-600">DNA Legislativo</span>
+                        <p class="analysis-text"><b>Seção II, art.5º</b> (Regulação de IA) identificado como cópia integral do Substitutivo do <b>PL 456/2021</b>, retirado de pauta por falta de quórum em Dez.23.</p>
+                    </div>
+                </div>
+                <div class="mt-auto grid grid-cols-2 gap-2 pt-4">
+                    <button onclick="changeScreen('detalhe')" class="action-btn btn-green">Voltar</button>
+                    <button onclick="changeScreen('chat')" class="action-btn btn-blue">Consultar IA</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. CHAT -->
+        <div id="screen-chat" class="screen">
+            <div class="screen-content bg-slate-200 p-0">
+                <div class="p-3 border-b bg-white">
+                    <h2 class="text-sm font-black text-flag-blue leading-tight">Consultoria Técnica IA</h2>
+                    <p id="chat-project-ref" class="text-[10px] text-slate-500 uppercase font-bold">PL 8889/25 – Regulação Streaming</p>
+                </div>
+                <div id="chat-history" class="flex-1 overflow-y-auto p-4 flex flex-col">
+                    <div class="chat-bubble bubble-bot">
+                        Olá! Sou sua assistente técnica. Já analisei o projeto em pauta. <b>Tire suas dúvidas específicas</b> sobre o texto ou impactos.
+                    </div>
+                </div>
+                <div class="p-3 bg-white border-t">
+                    <div class="flex gap-2">
+                        <input type="text" id="chat-input" placeholder="Digite sua pergunta..." class="flex-1 p-2 border rounded-lg text-sm outline-none">
+                        <button onclick="sendMessage()" class="p-2 btn-blue text-white rounded-lg w-10 flex items-center justify-center">
+                            <i class="fas fa-paper-plane text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="flex gap-2 mt-3">
+                        <button onclick="changeScreen('analise')" class="flex-1 action-btn btn-green">Análise</button>
+                        <button onclick="changeScreen('capa')" class="flex-1 action-btn btn-green">Capa</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -272,7 +385,7 @@
                 <section class="bg-white p-4 rounded-xl border shadow-sm">
                     <h3 class="text-xs font-black text-slate-400 uppercase mb-3">Gestão de Fontes & URLs</h3>
                     <div class="space-y-2">
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-2 items-center p-2 bg-slate-50 rounded border">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-2 items-center p-2 bg-slate-200 rounded border">
                             <div class="col-span-3 text-[11px] font-bold">Câmara dos Deputados</div>
                             <div class="col-span-4 text-[9px] text-slate-500 truncate">https://dadosabertos.camara.leg.br/api/v2/proposicoes</div>
                             <div class="col-span-2 text-[10px]">1x por dia</div>
@@ -307,7 +420,7 @@
         <!-- 7. OPERATOR EDITOR -->
         <div id="screen-operator-editor" class="screen">
             <div class="screen-content p-0 flex flex-row overflow-hidden">
-                <div class="w-1/3 border-r flex flex-col bg-slate-50">
+                <div class="w-1/3 border-r flex flex-col bg-slate-200">
                     <div class="p-3 border-b bg-white font-black text-[10px] text-slate-400 uppercase">Pendentes</div>
                     <div class="flex-1 overflow-y-auto p-2">
                         <div class="p-3 bg-white border rounded-lg border-l-4 border-l-orange-500">
@@ -318,16 +431,16 @@
                     <button class="p-3 text-[10px] font-bold bg-white border-t uppercase">Mais antigos</button>
                 </div>
                 <div class="flex-1 flex flex-col bg-white overflow-hidden">
-                    <div class="p-3 border-b flex justify-between items-center bg-slate-50">
+                    <div class="p-3 border-b flex justify-between items-center bg-slate-200">
                         <span class="text-[10px] font-black text-slate-500">Item: 1 de 9</span>
                         <div class="flex gap-2"><button class="p-1 px-3 border rounded text-[10px]"><i class="fas fa-chevron-left"></i></button><button class="p-1 px-3 border rounded text-[10px]"><i class="fas fa-chevron-right"></i></button></div>
                     </div>
                     <div class="flex-1 overflow-y-auto p-4 space-y-4">
-                        <div class="bg-slate-50 p-3 rounded border"><span class="text-[10px] font-black text-slate-400 uppercase">Trecho</span><p class="text-[12px] italic">"...taxa adicional de fiscalização urbana..."</p></div>
+                        <div class="bg-slate-200 p-3 rounded border"><span class="text-[10px] font-black text-slate-400 uppercase">Trecho</span><p class="text-[12px] italic">"...taxa adicional de fiscalização urbana..."</p></div>
                         <div class="h-32 overflow-y-auto border rounded p-2 bg-slate-100 text-[10px] font-mono">Texto completo...</div>
                         <textarea class="w-full p-2 text-[12px] border rounded-lg h-20 outline-none" placeholder="Parecer"></textarea>
                     </div>
-                    <div class="p-4 border-t bg-slate-50 grid grid-cols-2 gap-3">
+                    <div class="p-4 border-t bg-slate-200 grid grid-cols-2 gap-3">
                         <button class="action-btn bg-slate-300 text-slate-600">Descartar</button>
                         <button class="action-btn btn-green">Publicar</button>
                     </div>
@@ -339,7 +452,7 @@
     <script>
         const subtitles = {
             'login': '', 'home': 'Projetos em Pauta', 'capa': 'Ficha Técnica', 'detalhe': 'ANÁLISE IA (Riscos & Alertas)', 
-            'analise': 'Análise Detalhada (LLM)', 'operator': 'Gestão de Fontes', 'operator-users': 'Gestão de Usuários', 'operator-editor': 'Editor de Jabutis'
+            'analise': 'Análise Detalhada (LLM)', 'chat': 'Chat Contextual IA', 'riscos-altos': 'Riscos de Nível Alto', 'riscos-moderados': 'Riscos de Nível Moderado', 'reincarnacao': 'Histórico de Reencarnação', 'operator': 'Gestão de Fontes', 'operator-users': 'Gestão de Usuários', 'operator-editor': 'Editor de Jabutis'
         };
         const partyProfiles = {
             'geral': { orientation: 'neutra', label: 'Percepção da Casa', marker: '50%' },
@@ -390,8 +503,10 @@
         }
 
         function openCapa(num, title) {
-            document.getElementById('capa-num').innerText = num + " – " + title;
-            document.querySelectorAll('#screen-detalhe h2, #screen-analise h2').forEach(h2 => h2.innerText = num + " – " + title);
+            const fullTitle = num + " – " + title;
+            document.getElementById('capa-num').innerText = fullTitle;
+            document.getElementById('chat-project-ref').innerText = fullTitle;
+            document.querySelectorAll('#screen-detalhe h2, #screen-analise h2, #screen-riscos-altos h2, #screen-riscos-moderados h2, #screen-reincarnacao h2').forEach(h2 => h2.innerText = fullTitle);
             changeScreen('capa');
         }
 
@@ -412,6 +527,37 @@
             log.innerHTML += `<br>[${new Date().toLocaleTimeString()}] Iniciando busca...`;
             setTimeout(() => { log.innerHTML += `<br>[${new Date().toLocaleTimeString()}] Projeto capturado.`; log.scrollTop = log.scrollHeight; }, 1000);
         }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const history = document.getElementById('chat-history');
+            const text = input.value.trim();
+            
+            if (text) {
+                // User Message
+                const userDiv = document.createElement('div');
+                userDiv.className = 'chat-bubble bubble-user';
+                userDiv.innerText = text;
+                history.appendChild(userDiv);
+                
+                input.value = '';
+                history.scrollTop = history.scrollHeight;
+                
+                // Bot Response (Simulated)
+                setTimeout(() => {
+                    const botDiv = document.createElement('div');
+                    botDiv.className = 'chat-bubble bubble-bot';
+                    botDiv.innerHTML = `<i>Analisando contexto do projeto...</i><br>Com base no texto do projeto, sua dúvida sobre "${text}" tem relevância técnica. No Artigo 45, observamos que...`;
+                    history.appendChild(botDiv);
+                    history.scrollTop = history.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        // Allow Enter key to send message
+        document.getElementById('chat-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') sendMessage();
+        });
     </script>
 </body>
 </html>
