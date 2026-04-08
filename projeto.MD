@@ -67,6 +67,16 @@ O projeto **Jabuti Exibido** monitora projetos de lei em sites governamentais at
 - [ ] **Backend Base (FastAPI):** Estrutura inicial para servir dados e integrar com LLM.
 - [ ] **Sugestões Rápidas de IA:** Organizar como subitens na tela de riscos e alertas.
 
+## Regras de Negócio e Fluxos Específicos
+
+### Orientação de Bancada e Liderança
+1. **Definição de Líder:** No Painel de Controle, um parlamentar pode ser designado como "Líder do Partido".
+2. **Fluxo de Orientação:**
+   - Quando um novo projeto é capturado e analisado, a **Orientação do Partido** nasce automaticamente como **Neutra**.
+   - O Líder do Partido possui o poder de definir a orientação oficial.
+   - Assim que o Líder registra sua escolha (Sim/Não/Abster) na tela de Ficha Técnica, essa decisão é propagada como a "Orientação do Partido" para todos os outros parlamentares da mesma agremiação.
+   - O sistema envia uma notificação de atualização assim que o Líder define o posicionamento.
+
 ## Conclusões Técnicas de Pré-Projeto
 1. **Infraestrutura:** O sistema requer execução 24/7 para crawlers agendados e processamento assíncrono de RAG.
 2. **Escalabilidade:** O uso de embeddings por artigo (chunking granular) é essencial para detectar fatiamento e reencarnação de textos em diferentes projetos.

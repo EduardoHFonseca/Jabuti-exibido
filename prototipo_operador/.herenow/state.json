@@ -1,16 +1,16 @@
 {
   "publishes": {
-    "marble-willow-pfvm": {
-      "siteUrl": "https://marble-willow-pfvm.here.now/"
+    "dusty-tulip-tjk8": {
+      "siteUrl": "https://dusty-tulip-tjk8.here.now/",
+      "claimToken": "9c1c2bc4589c1527f7abb5e2a40eac8679f38df606342c631b59fc7459ff6fd9",
+      "claimUrl": "https://here.now/claim?slug=dusty-tulip-tjk8&token=9c1c2bc4589c1527f7abb5e2a40eac8679f38df606342c631b59fc7459ff6fd9",
+      "expiresAt": "2026-04-08T18:36:28.104Z"
     },
-    "flowing-kettle-2cbt": {
-      "siteUrl": "https://flowing-kettle-2cbt.here.now/",
-      "claimToken": "dc0c3e9c6d48336310112f70c47a9293fcbe43fbbd466c547c0cc01d16f7b5a0",
-      "claimUrl": "https://here.now/claim?slug=flowing-kettle-2cbt&token=dc0c3e9c6d48336310112f70c47a9293fcbe43fbbd466c547c0cc01d16f7b5a0",
-      "expiresAt": "2026-04-01T12:59:15.571Z"
+    "tropic-marsh-qvap": {
+      "siteUrl": "https://tropic-marsh-qvap.here.now/"
     },
-    "fern-gable-pff7": {
-      "siteUrl": "https://fern-gable-pff7.here.now/"
+    "faint-osprey-s92r": {
+      "siteUrl": "https://faint-osprey-s92r.here.now/"
     }
   }
 }

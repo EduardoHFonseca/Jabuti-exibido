@@ -91,11 +91,20 @@
                     <button id="btn-parlamentar-home" onclick="changeScreen('home')" class="text-white opacity-80 hover:opacity-100 transition-opacity">
                         <i class="fas fa-home text-sm"></i>
                     </button>
+                    <button id="btn-operator-dashboard" onclick="changeScreen('operator-dashboard')" class="text-white opacity-80 hover:opacity-100 transition-opacity hidden">
+                        <i class="fas fa-chart-line text-sm"></i>
+                    </button>
                     <button id="btn-operator-sources" onclick="changeScreen('operator')" class="text-white opacity-80 hover:opacity-100 transition-opacity hidden">
                         <i class="fas fa-database text-sm"></i>
                     </button>
-                    <button id="btn-operator-users" onclick="changeScreen('operator-users')" class="text-white opacity-80 hover:opacity-100 transition-opacity hidden">
+                    <button id="btn-operator-parlamentares" onclick="changeScreen('operator-parlamentares')" class="text-white opacity-80 hover:opacity-100 transition-opacity hidden">
+                        <i class="fas fa-user-tie text-sm"></i>
+                    </button>
+                    <button id="btn-operator-partidos" onclick="changeScreen('operator-partidos')" class="text-white opacity-80 hover:opacity-100 transition-opacity hidden">
                         <i class="fas fa-users text-sm"></i>
+                    </button>
+                    <button id="btn-operator-contingencia" onclick="changeScreen('operator-contingencia')" class="text-white opacity-80 hover:opacity-100 transition-opacity hidden">
+                        <i class="fas fa-file-upload text-sm"></i>
                     </button>
                     <button id="btn-operator-editor" onclick="changeScreen('operator-editor')" class="text-white opacity-80 hover:opacity-100 transition-opacity hidden">
                         <i class="fas fa-gavel text-sm"></i>
@@ -379,6 +388,62 @@
             </div>
         </div>
 
+        <!-- 5.1 OPERATOR DASHBOARD -->
+        <div id="screen-operator-dashboard" class="screen">
+            <div class="screen-content space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-white p-3 rounded-xl border shadow-sm flex flex-col items-center justify-center">
+                        <span class="text-[10px] font-black text-slate-400 uppercase">Projetos Hoje</span>
+                        <span class="text-2xl font-black text-dark-green">24</span>
+                    </div>
+                    <div class="bg-white p-3 rounded-xl border shadow-sm flex flex-col items-center justify-center">
+                        <span class="text-[10px] font-black text-slate-400 uppercase">Alertas IA</span>
+                        <span class="text-2xl font-black text-orange-500">07</span>
+                    </div>
+                </div>
+
+                <section class="bg-white p-4 rounded-xl border shadow-sm">
+                    <h3 class="text-xs font-black text-slate-400 uppercase mb-3">Status das Fontes</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                <span class="text-[12px] font-bold text-slate-700">Câmara dos Deputados</span>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-400">Online</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                <span class="text-[12px] font-bold text-slate-700">Senado Federal</span>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-400">Online</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-orange-500"></div>
+                                <span class="text-[12px] font-bold text-slate-700">DOU (Imprensa Nacional)</span>
+                            </div>
+                            <span class="text-[10px] font-bold text-orange-500">Lento</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-white p-4 rounded-xl border shadow-sm">
+                    <h3 class="text-xs font-black text-slate-400 uppercase mb-3">Atividade Recente (Crawler)</h3>
+                    <div class="console-box h-40">
+                        [08:00:12] Crawler iniciado: Câmara<br>
+                        [08:05:30] PL 8889/2025 capturado com sucesso<br>
+                        [08:05:35] Iniciando processamento de embeddings (RAG)<br>
+                        [08:06:12] IA detectou 2 reencarnações no PL 8889/2025<br>
+                        [09:30:00] Crawler iniciado: Senado<br>
+                        [09:32:15] Erro ao acessar API Senado (Timeout)<br>
+                        [09:32:16] Tentativa 2/3 em 5 minutos...
+                    </div>
+                </section>
+            </div>
+        </div>
+
         <!-- 5. OPERATOR SOURCES -->
         <div id="screen-operator" class="screen">
             <div class="screen-content space-y-4">
@@ -386,33 +451,277 @@
                     <h3 class="text-xs font-black text-slate-400 uppercase mb-3">Gestão de Fontes & URLs</h3>
                     <div class="space-y-2">
                         <div class="grid grid-cols-1 md:grid-cols-12 gap-2 items-center p-2 bg-slate-200 rounded border">
-                            <div class="col-span-3 text-[11px] font-bold">Câmara dos Deputados</div>
+                            <div class="col-span-3 text-[11px] font-bold text-slate-700">Câmara dos Deputados</div>
                             <div class="col-span-4 text-[9px] text-slate-500 truncate">https://dadosabertos.camara.leg.br/api/v2/proposicoes</div>
                             <div class="col-span-2 text-[10px]">1x por dia</div>
                             <div class="col-span-1 text-[10px]">12:00hs</div>
                             <div class="col-span-2 flex justify-end gap-3 text-slate-400">
-                                <i class="fas fa-pause text-[10px]"></i><i class="fas fa-edit text-[10px]"></i><i class="fas fa-trash text-[10px]"></i>
+                                <i class="fas fa-pause text-[10px] cursor-pointer hover:text-slate-600"></i><i class="fas fa-edit text-[10px] cursor-pointer hover:text-slate-600"></i><i class="fas fa-trash text-[10px] cursor-pointer hover:text-slate-600"></i>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-2 items-center p-2 bg-slate-200 rounded border">
+                            <div class="col-span-3 text-[11px] font-bold text-slate-700">Senado Federal</div>
+                            <div class="col-span-4 text-[9px] text-slate-500 truncate">https://legis.senado.leg.br/dadosabertos/materia/pesquisa</div>
+                            <div class="col-span-2 text-[10px]">1x por dia</div>
+                            <div class="col-span-1 text-[10px]">13:00hs</div>
+                            <div class="col-span-2 flex justify-end gap-3 text-slate-400">
+                                <i class="fas fa-play text-[10px] cursor-pointer hover:text-slate-600 text-green-600"></i><i class="fas fa-edit text-[10px] cursor-pointer hover:text-slate-600"></i><i class="fas fa-trash text-[10px] cursor-pointer hover:text-slate-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="w-full mt-4 p-2 bg-slate-100 border border-dashed border-slate-300 rounded text-[11px] font-bold text-slate-500 uppercase">+ Adicionar Nova Fonte</button>
+                </section>
+                <section class="bg-white p-4 rounded-xl border shadow-sm">
+                    <h3 class="text-xs font-black text-slate-400 uppercase mb-3">Captura Manual por ID</h3>
+                    <div class="flex gap-2">
+                        <input type="text" placeholder="Número do Projeto (ex: PL 123/24)" class="flex-1 p-2 border rounded text-sm outline-none">
+                        <button onclick="simulateSearch()" class="px-4 py-2 btn-green text-white text-[11px] font-bold rounded uppercase">Buscar Agora</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- 6. OPERATOR PARLAMENTARES -->
+        <div id="screen-operator-parlamentares" class="screen">
+            <div class="screen-content space-y-4">
+                <section class="bg-white p-4 rounded-xl border shadow-sm">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xs font-black text-slate-400 uppercase">Gestão de Parlamentares</h3>
+                        <button class="bg-dark-green text-white text-[10px] font-bold px-3 py-1.5 rounded uppercase shadow-sm">+ Novo</button>
+                    </div>
+                    
+                    <!-- FILTROS -->
+                    <div class="grid grid-cols-2 gap-2 mb-4">
+                        <input type="text" placeholder="Nome" class="p-2 border rounded text-[11px] outline-none bg-slate-50">
+                        <select class="p-2 border rounded text-[11px] outline-none bg-slate-50">
+                            <option value="">Partido (Todos)</option>
+                            <option>PSD</option>
+                            <option>PL</option>
+                            <option>PT</option>
+                            <option>NOVO</option>
+                        </select>
+                        <select class="p-2 border rounded text-[11px] outline-none bg-slate-50">
+                            <option value="">UF (Todos)</option>
+                            <option>SP</option>
+                            <option>RJ</option>
+                            <option>MG</option>
+                            <option>TO</option>
+                        </select>
+                        <select class="p-2 border rounded text-[11px] outline-none bg-slate-50">
+                            <option value="">Bancada</option>
+                            <option>Agro</option>
+                            <option>Bala</option>
+                            <option>Evangélica</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-3 p-2 bg-slate-50 rounded border">
+                            <div class="w-8 h-8 rounded-full bg-slate-300 flex-shrink-0"></div>
+                            <div class="flex-1">
+                                <p class="text-[11px] font-bold text-slate-700">Dep. João Lemos</p>
+                                <p class="text-[9px] text-slate-500 uppercase">PSD / TO</p>
+                            </div>
+                            <div class="flex gap-2 text-slate-400">
+                                <i class="fas fa-edit text-[10px] cursor-pointer"></i>
+                                <i class="fas fa-user-tag text-[10px] cursor-pointer text-blue-500"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 p-2 bg-slate-50 rounded border">
+                            <div class="w-8 h-8 rounded-full bg-slate-300 flex-shrink-0"></div>
+                            <div class="flex-1">
+                                <p class="text-[11px] font-bold text-slate-700">Dep. Adriana Souza</p>
+                                <p class="text-[9px] text-slate-500 uppercase">NOVO / SP</p>
+                            </div>
+                            <div class="flex gap-2 text-slate-400">
+                                <i class="fas fa-edit text-[10px] cursor-pointer"></i>
+                                <i class="fas fa-user-tag text-[10px] cursor-pointer text-blue-500"></i>
                             </div>
                         </div>
                     </div>
                 </section>
-                <section class="bg-white p-4 rounded-xl border shadow-sm">
-                    <h3 class="text-xs font-black text-slate-400 uppercase mb-3">Captura Manual</h3>
-                    <div class="flex gap-2">
-                        <input type="text" placeholder="Número do Projeto" class="flex-1 p-2 border rounded text-sm outline-none">
-                        <button onclick="simulateSearch()" class="px-4 py-2 btn-green text-white text-[11px] font-bold rounded uppercase">Buscar Agora</button>
-                    </div>
-                </section>
-                <section><div id="operator-log" class="console-box">[10:15:02] Sistema pronto.</div></section>
             </div>
         </div>
 
-        <!-- 6. OPERATOR USERS -->
-        <div id="screen-operator-users" class="screen">
-            <div class="screen-content">
-                <div class="bg-white p-4 rounded-xl border shadow-sm">
-                    <h3 class="text-xs font-black text-slate-400 uppercase mb-3">Usuários</h3>
-                    <p class="text-slate-500 text-xs italic">Gerenciamento em breve.</p>
+        <!-- 8. OPERATOR CONTINGÊNCIA -->
+        <div id="screen-operator-contingencia" class="screen">
+            <div class="screen-content space-y-4">
+                <section class="bg-white p-6 rounded-xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-center">
+                    <i class="fas fa-cloud-upload-alt text-3xl text-slate-300 mb-3"></i>
+                    <h3 class="text-sm font-black text-slate-600 uppercase">Upload de Inteiro Teor</h3>
+                    <p class="text-[11px] text-slate-400 mt-1 mb-4">Arraste o PDF do Projeto de Lei ou clique para selecionar</p>
+                    <button class="bg-slate-600 text-white text-[11px] font-bold px-6 py-2 rounded uppercase shadow-md">Selecionar Arquivo</button>
+                </section>
+
+                <div class="flex items-center gap-4 my-2">
+                    <div class="flex-1 h-px bg-slate-200"></div>
+                    <span class="text-[10px] font-black text-slate-300 uppercase">OU</span>
+                    <div class="flex-1 h-px bg-slate-200"></div>
+                </div>
+
+                <section class="bg-white p-4 rounded-xl border shadow-sm">
+                    <h3 class="text-xs font-black text-slate-400 uppercase mb-3">Colar Texto do Projeto</h3>
+                    <textarea class="w-full h-40 p-3 text-[12px] border rounded-lg outline-none bg-slate-50 mb-3" placeholder="Cole aqui o texto completo dos artigos para análise da IA..."></textarea>
+                    <button onclick="simulateProcess()" class="w-full action-btn btn-blue py-3">Processar com IA agora</button>
+                </section>
+
+                <div id="process-status" class="hidden">
+                    <div class="bg-white p-4 rounded-xl border shadow-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[11px] font-bold text-slate-600">Analisando Jabutis...</span>
+                            <span class="text-[11px] font-black text-blue-600" id="process-percent">45%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                            <div id="process-bar" class="bg-blue-600 h-full transition-all duration-500" style="width: 45%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. OPERATOR PARTIDOS -->
+        <div id="screen-operator-partidos" class="screen">
+            <div class="screen-content space-y-4">
+                <section class="bg-white p-4 rounded-xl border shadow-sm">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xs font-black text-slate-400 uppercase">Gestão de Partidos</h3>
+                        <button class="bg-dark-green text-white text-[10px] font-bold px-3 py-1.5 rounded uppercase shadow-sm">+ Novo Partido</button>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded border cursor-pointer hover:bg-slate-100" onclick="openPartido('PSD', 'Partido Social Democrático')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-600 font-black rounded text-xs">PSD</div>
+                                <div>
+                                    <p class="text-[12px] font-bold text-slate-700">PSD</p>
+                                    <p class="text-[10px] text-slate-400">42 Parlamentares</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-slate-300 text-xs"></i>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded border cursor-pointer hover:bg-slate-100" onclick="openPartido('NOVO', 'Partido Novo')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 flex items-center justify-center bg-blue-100 text-blue-600 font-black rounded text-xs">NOVO</div>
+                                <div>
+                                    <p class="text-[12px] font-bold text-slate-700">NOVO</p>
+                                    <p class="text-[10px] text-slate-400">4 Parlamentares</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-slate-300 text-xs"></i>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded border cursor-pointer hover:bg-slate-100" onclick="openPartido('PT', 'Partido dos Trabalhadores')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 flex items-center justify-center bg-red-100 text-red-600 font-black rounded text-xs">PT</div>
+                                <div>
+                                    <p class="text-[12px] font-bold text-slate-700">PT</p>
+                                    <p class="text-[10px] text-slate-400">68 Parlamentares</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-slate-300 text-xs"></i>
+                        </div>
+                    </div>
+                </section>
+                <div class="p-4 bg-blue-50 border border-blue-100 rounded-xl">
+                    <p class="text-[11px] text-blue-700 leading-relaxed">
+                        <i class="fas fa-info-circle mr-1"></i> A gestão por partido simplifica a navegação. Clique em um partido para gerenciar seus parlamentares e definir o <b>Líder do Partido</b>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9.1 OPERATOR PARTIDO DETALHE -->
+        <div id="screen-operator-partido-detalhe" class="screen">
+            <div class="screen-content space-y-4">
+                <section class="bg-white p-4 rounded-xl border shadow-sm">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div id="detalhe-partido-sigla" class="w-12 h-12 flex items-center justify-center bg-slate-100 text-slate-600 font-black rounded text-sm">---</div>
+                        <div>
+                            <h3 id="detalhe-partido-nome" class="text-sm font-black text-slate-700 uppercase">Nome do Partido</h3>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-tight">Razão Social / Registro TSE</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <h4 class="text-[10px] font-black text-slate-400 uppercase">Parlamentares</h4>
+                            <button class="text-[10px] font-bold text-blue-600 hover:underline">+ Adicionar Deputado</button>
+                        </div>
+                        
+                        <div class="bg-slate-50 rounded-lg border p-1 max-h-60 overflow-y-auto space-y-1" id="lista-deputados-partido">
+                            <!-- Lista Simulada -->
+                            <div class="flex items-center justify-between p-2 bg-white rounded border-sm">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-slate-200"></div>
+                                    <span class="text-[11px] font-bold text-slate-700">Dep. João Lemos</span>
+                                    <span class="text-[8px] bg-yellow-100 text-yellow-700 px-1 rounded font-black uppercase">Líder</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="text-[10px] text-blue-500 font-bold" title="Tornar Líder"><i class="fas fa-star"></i></button>
+                                    <button class="text-[10px] text-red-400 font-bold" title="Remover"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-white rounded border-sm">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-slate-200"></div>
+                                    <span class="text-[11px] font-medium text-slate-600">Dep. Maria Silva</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button onclick="alert('Definido como novo Líder do Partido')" class="text-[10px] text-slate-300 hover:text-yellow-500 font-bold" title="Tornar Líder"><i class="fas fa-star"></i></button>
+                                    <button class="text-[10px] text-red-400 font-bold" title="Remover"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t mt-4 flex gap-2">
+                        <button onclick="changeScreen('operator-partidos')" class="flex-1 p-2 bg-slate-100 text-slate-600 rounded text-[11px] font-bold uppercase">Voltar</button>
+                        <button onclick="alert('Alterações salvas com sucesso')" class="flex-1 p-2 bg-dark-green text-white rounded text-[11px] font-bold uppercase">Salvar Alterações</button>
+                    </div>
+                </section>
+
+                <div class="p-4 bg-orange-50 border border-orange-100 rounded-xl">
+                    <p class="text-[10px] text-orange-700 leading-relaxed italic">
+                        <i class="fas fa-exclamation-triangle mr-1"></i> <b>Nota de Liderança:</b> O parlamentar marcado com a estrela amarela (Líder) terá seu voto replicado como "Orientação do Partido" para todos os demais membros em tempo real.
+                    </p>
+                </div>
+            </div>
+        </div>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded border cursor-pointer hover:bg-slate-100" onclick="changeScreen('operator-parlamentares')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-600 font-black rounded text-xs">PSD</div>
+                                <div>
+                                    <p class="text-[12px] font-bold text-slate-700">PSD</p>
+                                    <p class="text-[10px] text-slate-400">42 Parlamentares</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-slate-300 text-xs"></i>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded border cursor-pointer hover:bg-slate-100" onclick="changeScreen('operator-parlamentares')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 flex items-center justify-center bg-blue-100 text-blue-600 font-black rounded text-xs">NOVO</div>
+                                <div>
+                                    <p class="text-[12px] font-bold text-slate-700">NOVO</p>
+                                    <p class="text-[10px] text-slate-400">4 Parlamentares</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-slate-300 text-xs"></i>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded border cursor-pointer hover:bg-slate-100" onclick="changeScreen('operator-parlamentares')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 flex items-center justify-center bg-red-100 text-red-600 font-black rounded text-xs">PT</div>
+                                <div>
+                                    <p class="text-[12px] font-bold text-slate-700">PT</p>
+                                    <p class="text-[10px] text-slate-400">68 Parlamentares</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-slate-300 text-xs"></i>
+                        </div>
+                    </div>
+                </section>
+                <div class="p-4 bg-blue-50 border border-blue-100 rounded-xl">
+                    <p class="text-[11px] text-blue-700 leading-relaxed">
+                        <i class="fas fa-info-circle mr-1"></i> A gestão por partido simplifica a navegação. Clique em um partido para ver e editar seus <b>Parlamentares</b> específicos.
+                    </p>
                 </div>
             </div>
         </div>
@@ -452,7 +761,8 @@
     <script>
         const subtitles = {
             'login': '', 'home': 'Projetos em Pauta', 'capa': 'Ficha Técnica', 'detalhe': 'ANÁLISE IA (Riscos & Alertas)', 
-            'analise': 'Análise Detalhada (LLM)', 'chat': 'Chat Contextual IA', 'riscos-altos': 'Riscos de Nível Alto', 'riscos-moderados': 'Riscos de Nível Moderado', 'reincarnacao': 'Histórico de Reencarnação', 'operator': 'Gestão de Fontes', 'operator-users': 'Gestão de Usuários', 'operator-editor': 'Editor de Jabutis'
+            'analise': 'Análise Detalhada (LLM)', 'chat': 'Chat Contextual IA', 'riscos-altos': 'Riscos de Nível Alto', 'riscos-moderados': 'Riscos de Nível Moderado', 'reincarnacao': 'Histórico de Reencarnação', 
+            'operator-dashboard': 'Dashboard de Saúde', 'operator': 'Gestão de Fontes', 'operator-parlamentares': 'Gestão de Parlamentares', 'operator-partidos': 'Gestão de Partidos', 'operator-partido-detalhe': 'Detalhe do Partido', 'operator-contingencia': 'Central de Contingência', 'operator-editor': 'Editor de Jabutis'
         };
         const partyProfiles = {
             'geral': { orientation: 'neutra', label: 'Percepção da Casa', marker: '50%' },
@@ -472,8 +782,11 @@
                 headerTitle.innerText = 'Câmara dos Deputados';
                 dynamicSub.className = 'page-subtitle shrink-0';
                 document.getElementById('btn-parlamentar-home').classList.remove('hidden');
+                document.getElementById('btn-operator-dashboard').classList.add('hidden');
                 document.getElementById('btn-operator-sources').classList.add('hidden');
-                document.getElementById('btn-operator-users').classList.add('hidden');
+                document.getElementById('btn-operator-parlamentares').classList.add('hidden');
+                document.getElementById('btn-operator-partidos').classList.add('hidden');
+                document.getElementById('btn-operator-contingencia').classList.add('hidden');
                 document.getElementById('btn-operator-editor').classList.add('hidden');
                 changeScreen('home');
             } else {
@@ -481,10 +794,13 @@
                 headerTitle.innerText = 'PAINEL DE CONTROLE';
                 dynamicSub.className = 'page-subtitle operator shrink-0';
                 document.getElementById('btn-parlamentar-home').classList.add('hidden');
+                document.getElementById('btn-operator-dashboard').classList.remove('hidden');
                 document.getElementById('btn-operator-sources').classList.remove('hidden');
-                document.getElementById('btn-operator-users').classList.remove('hidden');
+                document.getElementById('btn-operator-parlamentares').classList.remove('hidden');
+                document.getElementById('btn-operator-partidos').classList.remove('hidden');
+                document.getElementById('btn-operator-contingencia').classList.remove('hidden');
                 document.getElementById('btn-operator-editor').classList.remove('hidden');
-                changeScreen('operator');
+                changeScreen('operator-dashboard');
             }
         }
 
@@ -510,6 +826,12 @@
             changeScreen('capa');
         }
 
+        function openPartido(sigla, nome) {
+            document.getElementById('detalhe-partido-sigla').innerText = sigla;
+            document.getElementById('detalhe-partido-nome').innerText = nome;
+            changeScreen('operator-partido-detalhe');
+        }
+
         function updatePartyProfile(party) {
             const profile = partyProfiles[party];
             document.getElementById('perception-label').innerText = profile.label;
@@ -523,9 +845,30 @@
         }
 
         function simulateSearch() {
-            const log = document.getElementById('operator-log');
-            log.innerHTML += `<br>[${new Date().toLocaleTimeString()}] Iniciando busca...`;
-            setTimeout(() => { log.innerHTML += `<br>[${new Date().toLocaleTimeString()}] Projeto capturado.`; log.scrollTop = log.scrollHeight; }, 1000);
+            alert('Comando de busca enviado para o Crawler da Câmara. Verifique o Dashboard para acompanhar o log.');
+            changeScreen('operator-dashboard');
+        }
+
+        function simulateProcess() {
+            const statusDiv = document.getElementById('process-status');
+            const bar = document.getElementById('process-bar');
+            const percentText = document.getElementById('process-percent');
+            
+            statusDiv.classList.remove('hidden');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.floor(Math.random() * 15) + 5;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        alert('Processamento concluído! O projeto já está disponível para análise no perfil parlamentar.');
+                        statusDiv.classList.add('hidden');
+                    }, 500);
+                }
+                bar.style.width = progress + '%';
+                percentText.innerText = progress + '%';
+            }, 300);
         }
 
         function sendMessage() {
