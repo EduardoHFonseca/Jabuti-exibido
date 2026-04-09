@@ -67,7 +67,45 @@ O projeto **Jabuti Exibido** monitora projetos de lei em sites governamentais at
 - [ ] **Backend Base (FastAPI):** Estrutura inicial para servir dados e integrar com LLM.
 - [ ] **Sugestões Rápidas de IA:** Organizar como subitens na tela de riscos e alertas.
 
+## Backlog de UI & UX (Melhorias Sugeridas)
+- [ ] **Badge de Consistência Política:** Sinalização visual na Capa baseada no histórico de votos (Memória do Parlamentar).
+- [ ] **Tela de Comparação de Versões (Deep Diff):** Interface para visualizar fatiamento legislativo (Original vs Substitutivo).
+- [ ] **Tela de Memória do Parlamentar:** Detalhamento dos votos históricos cruzados com o PL atual.
+- [ ] **Interatividade nos 9 Quesitos:** Permitir expansão de justificativas para todos os níveis de risco (Alto, Médio, Baixo).
+- [ ] **Editor de Jabutis (Split View):** Interface lado-a-lado para validação humana no perfil Operador.
+- [ ] **Navegação Inferior (Bottom Nav):** Menu de acesso rápido (Pauta, Busca, Alertas) para perfil Parlamentar.
+- [ ] **Polimento Visual:** Implementação de Glassmorphism, sombras suaves e micro-interações de processamento de IA.
+- [ ] **Onboarding & Router de Personas:** Tela de entrada para segmentação (Cidadão, Imprensa, Gabinete, Parlamentar).
+- [ ] **Landing Page de Planos:** Interface de checkout para planos Simbólico (Cidadão) e Premium (Imprensa).
+- [ ] **Histórico de Consultas IA:** Registro persistente das conversas no Chat Contextual, organizado por projeto e parlamentar.
+- [ ] **Favoritos na Análise:** Funcionalidade na tela de Análise para favoritar artigos específicos ou respostas da IA (itens para "bater o pé").
+- [ ] **Indicador de Favoritos na Capa:** Sinalização visual na Ficha Técnica (Capa) informando que existem itens marcados como importantes naquele projeto.
+- [ ] **Dashboard de Dúvidas Recentes (Operador):** Painel anonimizado de "Trending Topics" para identificar trechos ambíguos nos projetos baseados nas perguntas frequentes dos parlamentares.
+
+## Regras de Negócio e Gestão de Licenças (Backlog)
+- [ ] **Gestão de Licenças de Gabinete:**
+    *   Definição de limites de licenças por parlamentar (ex: base + assessores).
+    *   Fluxo de pagamento e faturamento (Mensalidade/Anuidade).
+    *   Regras de Bloqueio Automático por inadimplência.
+    *   Liberação manual de usuários em contingência.
+    *   Sincronização de status "Ativo/Inativo" entre Gestão de Parlamentares e acesso ao App.
+- [ ] **Segurança e Autenticação Crítica:**
+    *   **Confirmação de Identidade:** Parlamentares e Assessores ficam com status "Pendente de Autenticação" até validação manual ou por documento/e-mail institucional para evitar personificação e influência indevida em votações.
+    *   **Reset de Senha Seguro:** Definição de fluxos rigorosos de recuperação de conta para perfis de Gabinete, visando mitigar riscos de engenharia social.
+
 ## Regras de Negócio e Fluxos Específicos
+
+### Métricas de Engajamento Partidário
+- [ ] **Estratégia de Monetização e Acesso:**
+    - **Cidadão (Freemium):** App em lojas (Play/Apple) com acesso a resumos IA; Chat IA ilimitado via taxa simbólica.
+    - **Imprensa (Premium):** Assinatura para acesso a dados agregados, alertas de DNA repetido e tendências de bancada.
+- [ ] **Definir lógica de cálculo:**
+    - **Orientação Definida:** % de projetos em que a liderança registrou orientação oficial vs. total de projetos analisados.
+    - **Engajamento de Escolha:** Média percentual de "Inclinação Pessoal" preenchida pelos deputados do partido.
+- [ ] **Taxonomia da Dúvida (IA):**
+    - Implementar classificador de intenção para categorizar consultas em: *Clareza de Redação, Impacto Prático, Risco/Conformidade e Posicionamento*.
+    - **Log de Dúvidas:** Persistir cada consulta vinculada ao parlamentar e projeto para análise de tendências e predição de comportamento.
+    - **Alerta de Ambiguidade:** Disparar alerta visual na tela do parlamentar caso o volume de dúvidas de "Redação" ou "Risco" ultrapasse um limiar crítico (indicando texto obscuro ou perigoso).
 
 ### Orientação de Bancada e Liderança
 1. **Definição de Líder:** No Painel de Controle, um parlamentar pode ser designado como "Líder do Partido".
