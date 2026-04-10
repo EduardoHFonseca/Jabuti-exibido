@@ -1,5 +1,21 @@
 # Jabuti Exibido
 
+## Fase Atual: Prototipação e Prospecção
+O projeto encontra-se na etapa de **Levantamento de Necessidades, Design de Interfaces e Captação de Patrocínio**.
+- **Objetivo Primário:** Elevar ao máximo a qualidade do Front-end (UI/UX) para demonstrações de alto impacto.
+- **Persistência de Dados:** Não há obrigatoriedade de persistir ou consistir dados reais nesta fase. O foco é a simulação visual e funcional das jornadas de usuário.
+- **Regras de Negócio:** Serão adicionadas ao backlog de forma incremental conforme o design das telas evolui. A definição completa e rigorosa ocorrerá apenas em fases futuras.
+- **Componentes do Motor:** O desenvolvimento de Banco de Dados, Crawler, RAG e infraestrutura de Push/Deploy Mobile está postergado para a fase de implementação técnica após validação do protótipo.
+
+### Definições de Perfil (Backlog de Regras)
+- **Operador (Administrador do Sistema):** Perfil técnico/administrativo focado em:
+    - Manutenção de infraestrutura (URLs do crawler, saúde do sistema).
+    - Gestão legal de usuários (remoção por força legal, bloqueios por inadimplência).
+    - Intervenção técnica no motor de IA (forçar re-processamento de textos no LLM/RAG).
+    - **Restrição:** Não possui autonomia para comunicações políticas ou orientações de bancada.
+- **Liderança/Assessoria de Gabinete:** Responsáveis pela comunicação política.
+    - **Broadcast de Partido:** Funcionalidade exclusiva para assessores vinculados ao parlamentar Líder do Partido. Permite disparar orientações, alertas e mensagens de mobilização para a bancada.
+
 ## Definição do Projeto
 O projeto **Jabuti Exibido** monitora projetos de lei em sites governamentais através de um Web Crawler. O sistema extrai informações, armazena em um RAG (Retrieval-Augmented Generation) e utiliza um LLM para identificar "Jabutis" — trechos inseridos em PLs sem relação com o objetivo primário da norma. O sistema fornece análises técnicas sobre riscos fiscais, jurídicos e ambientais para auxiliar parlamentares e o público.
 
@@ -51,7 +67,7 @@ O projeto **Jabuti Exibido** monitora projetos de lei em sites governamentais at
 - **Editor de Jabutis:** Interface de validação humana (Split View) com navegador de quesitos e ajuste de pareceres antes da publicação.
 
 ## Status do Desenvolvimento
-- [x] **Protótipo Interativo:** Finalizado e publicado (Desktop & Mobile).
+- [x] **Protótipo Interativo:** Finalizado e publicado em https://arctic-ferry-attp.here.now/ (Desktop & Mobile).
 - [x] **Definição de Fluxos:** Parlamentar e Operador mapeados.
 - [x] **Integração GitHub:** Repositório inicializado e sincronizado.
 - [ ] **Próxima Etapa:** Modelagem do Schema de Banco de Dados no Supabase.
@@ -116,7 +132,10 @@ O projeto **Jabuti Exibido** monitora projetos de lei em sites governamentais at
    - O sistema envia uma notificação de atualização assim que o Líder define o posicionamento.
 
 ## Conclusões Técnicas de Pré-Projeto
-1. **Infraestrutura:** O sistema requer execução 24/7 para crawlers agendados e processamento assíncrono de RAG.
-2. **Escalabilidade:** O uso de embeddings por artigo (chunking granular) é essencial para detectar fatiamento e reencarnação de textos em diferentes projetos.
-3. **Persistência Offline (PWA):** O front-end deve suportar cache local (Local Storage) para permitir consulta de pautas e análises em ambientes sem conexão.
-4. **Segurança de Dados:** Armazenamento do histórico de votos do parlamentar para cruzamento de dados e alertas personalizados de consistência política.
+1. **Design de Interface (Responsividade):**
+    - **Perfil Administrativo/Operador:** Design focado majoritariamente em **Desktop**. Deve ser funcional em dispositivos móveis para emergências, mas o layout pode ser comprometido em telas pequenas sem prejuízo à entrega.
+    - **Demais Perfis (Parlamentar, Jornalista, Assessor, Público):** Design otimizado para **Mobile First**. O layout deve ser perfeito e fluido em smartphones, sendo este o principal meio de acesso.
+2. **Infraestrutura:** O sistema requer execução 24/7 para crawlers agendados e processamento assíncrono de RAG.
+3. **Escalabilidade:** O uso de embeddings por artigo (chunking granular) é essencial para detectar fatiamento e reencarnação de textos em diferentes projetos.
+4. **Persistência Offline (PWA):** O front-end deve suportar cache local (Local Storage) para permitir consulta de pautas e análises em ambientes sem conexão.
+5. **Segurança de Dados:** Armazenamento do histórico de votos do parlamentar para cruzamento de dados e alertas personalizados de consistência política.

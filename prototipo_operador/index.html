@@ -100,6 +100,7 @@
         <div id="app-header" class="header-container">
             <div id="header-banner" class="bg-house p-2 mx-1 rounded-sm border shadow-sm shrink-0 flex items-center justify-between px-3">
                 <div id="header-left" class="flex gap-4 items-center">
+                    <div class="w-6"></div>
                     <button id="btn-parlamentar-home" onclick="changeScreen('home')" class="text-white opacity-80 hover:opacity-100 transition-opacity">
                         <i class="fas fa-home text-sm"></i>
                     </button>
@@ -108,6 +109,9 @@
                     </button>
                     <button id="btn-operator-sources" onclick="changeScreen('operator')" class="text-white opacity-80 hover:opacity-100 transition-opacity hidden">
                         <i class="fas fa-database text-sm"></i>
+                    </button>
+                    <button id="btn-operator-users" onclick="changeScreen('operator-users')" class="text-white opacity-80 hover:opacity-100 transition-opacity hidden">
+                        <i class="fas fa-users-cog text-sm"></i>
                     </button>
                     <button id="btn-operator-parlamentares" onclick="changeScreen('operator-parlamentares')" class="text-white opacity-80 hover:opacity-100 transition-opacity hidden">
                         <i class="fas fa-user-tie text-sm"></i>
@@ -740,48 +744,72 @@
 
         <!-- 9. OPERATOR PARTIDOS -->
         <div id="screen-operator-partidos" class="screen">
-            <div class="screen-content space-y-4">
-                <section class="bg-white p-4 rounded-xl border shadow-sm">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xs font-black text-slate-400 uppercase">Gestão de Partidos</h3>
-                        <button class="bg-dark-green text-white text-[10px] font-bold px-3 py-1.5 rounded uppercase shadow-sm">+ Novo Partido</button>
+            <div class="screen-content space-y-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-sm font-black text-slate-400 uppercase tracking-wider">Gestão de Partidos</h3>
+                        <p class="text-xs text-slate-500">Selecione uma agremiação para gerenciar parlamentares e orientações.</p>
                     </div>
-                    <div class="space-y-2">
-                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded border cursor-pointer hover:bg-slate-100" onclick="openPartido('PSD', 'Partido Social Democrático')">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-600 font-black rounded text-xs">PSD</div>
-                                <div>
-                                    <p class="text-[12px] font-bold text-slate-700">PSD</p>
-                                    <p class="text-[10px] text-slate-400">42 Parlamentares</p>
-                                </div>
-                            </div>
-                            <i class="fas fa-chevron-right text-slate-300 text-xs"></i>
+                    <button class="bg-dark-green text-white text-xs font-bold px-4 py-2 rounded-lg uppercase shadow-md hover:bg-green-800 transition-colors">+ Novo Partido</button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    <div class="bg-white p-4 rounded-xl border shadow-sm cursor-pointer hover:border-orange-400 transition-all group" onclick="openPartido('PSD', 'Partido Social Democrático')">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 flex items-center justify-center bg-orange-100 text-orange-600 font-black rounded-lg text-lg">PSD</div>
+                            <span class="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-1 rounded-full uppercase">Adimplente</span>
                         </div>
-                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded border cursor-pointer hover:bg-slate-100" onclick="openPartido('NOVO', 'Partido Novo')">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 flex items-center justify-center bg-blue-100 text-blue-600 font-black rounded text-xs">NOVO</div>
-                                <div>
-                                    <p class="text-[12px] font-bold text-slate-700">NOVO</p>
-                                    <p class="text-[10px] text-slate-400">4 Parlamentares</p>
-                                </div>
-                            </div>
-                            <i class="fas fa-chevron-right text-slate-300 text-xs"></i>
-                        </div>
-                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded border cursor-pointer hover:bg-slate-100" onclick="openPartido('PT', 'Partido dos Trabalhadores')">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 flex items-center justify-center bg-red-100 text-red-600 font-black rounded text-xs">PT</div>
-                                <div>
-                                    <p class="text-[12px] font-bold text-slate-700">PT</p>
-                                    <p class="text-[10px] text-slate-400">68 Parlamentares</p>
-                                </div>
-                            </div>
-                            <i class="fas fa-chevron-right text-slate-300 text-xs"></i>
+                        <h4 class="text-sm font-bold text-slate-700">PSD</h4>
+                        <p class="text-xs text-slate-400 mb-4">Partido Social Democrático</p>
+                        <div class="flex justify-between items-center pt-4 border-t">
+                            <span class="text-xs font-medium text-slate-500">42 Parlamentares</span>
+                            <i class="fas fa-arrow-right text-slate-300 group-hover:text-orange-400 transition-colors"></i>
                         </div>
                     </div>
-                </section>
+
+                    <div class="bg-white p-4 rounded-xl border shadow-sm cursor-pointer hover:border-blue-400 transition-all group" onclick="openPartido('NOVO', 'Partido Novo')">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 flex items-center justify-center bg-blue-100 text-blue-600 font-black rounded-lg text-lg">NOVO</div>
+                            <span class="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-1 rounded-full uppercase">Adimplente</span>
+                        </div>
+                        <h4 class="text-sm font-bold text-slate-700">NOVO</h4>
+                        <p class="text-xs text-slate-400 mb-4">Partido Novo</p>
+                        <div class="flex justify-between items-center pt-4 border-t">
+                            <span class="text-xs font-medium text-slate-500">4 Parlamentares</span>
+                            <i class="fas fa-arrow-right text-slate-300 group-hover:text-blue-400 transition-colors"></i>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border shadow-sm cursor-pointer hover:border-red-400 transition-all group" onclick="openPartido('PT', 'Partido dos Trabalhadores')">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 flex items-center justify-center bg-red-100 text-red-600 font-black rounded-lg text-lg">PT</div>
+                            <span class="text-[10px] font-bold bg-red-100 text-red-700 px-2 py-1 rounded-full uppercase">Pendente</span>
+                        </div>
+                        <h4 class="text-sm font-bold text-slate-700">PT</h4>
+                        <p class="text-xs text-slate-400 mb-4">Partido dos Trabalhadores</p>
+                        <div class="flex justify-between items-center pt-4 border-t">
+                            <span class="text-xs font-medium text-slate-500">68 Parlamentares</span>
+                            <i class="fas fa-arrow-right text-slate-300 group-hover:text-red-400 transition-colors"></i>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border shadow-sm cursor-pointer hover:border-blue-600 transition-all group" onclick="openPartido('PL', 'Partido Liberal')">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 flex items-center justify-center bg-blue-50 text-blue-800 font-black rounded-lg text-lg">PL</div>
+                            <span class="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-1 rounded-full uppercase">Adimplente</span>
+                        </div>
+                        <h4 class="text-sm font-bold text-slate-700">PL</h4>
+                        <p class="text-xs text-slate-400 mb-4">Partido Liberal</p>
+                        <div class="flex justify-between items-center pt-4 border-t">
+                            <span class="text-xs font-medium text-slate-500">96 Parlamentares</span>
+                            <i class="fas fa-arrow-right text-slate-300 group-hover:text-blue-600 transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="p-4 bg-blue-50 border border-blue-100 rounded-xl">
-                    <p class="text-[11px] text-blue-700 leading-relaxed">
-                        <i class="fas fa-info-circle mr-1"></i> A gestão por partido simplifica a navegação. Clique em um partido para gerenciar seus parlamentares e definir o <b>Líder do Partido</b>.
+                    <p class="text-xs text-blue-700 leading-relaxed">
+                        <i class="fas fa-info-circle mr-2"></i> Exibindo os principais partidos. Utilize a busca avançada para localizar siglas menores ou regionais.
                     </p>
                 </div>
             </div>
@@ -789,165 +817,186 @@
 
         <!-- 9.1 OPERATOR PARTIDO DETALHE -->
         <div id="screen-operator-partido-detalhe" class="screen">
-            <div class="screen-content space-y-4">
-                <section class="bg-white p-4 rounded-xl border shadow-sm">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div id="detalhe-partido-sigla" class="w-12 h-12 flex items-center justify-center bg-slate-100 text-slate-600 font-black rounded text-sm">---</div>
+            <div class="screen-content space-y-6">
+                <!-- Header Amplo -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-6 rounded-xl border shadow-sm gap-4">
+                    <div class="flex items-center gap-4">
+                        <div id="detalhe-partido-sigla" class="w-16 h-16 flex items-center justify-center bg-slate-100 text-slate-600 font-black rounded-xl text-2xl shadow-inner">---</div>
                         <div>
-                            <h3 id="detalhe-partido-nome" class="text-sm font-black text-slate-700 uppercase">Nome do Partido</h3>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-tight">Razão Social / Registro TSE</p>
-                        </div>
-                    </div>
-
-                    <!-- Informações de Composição e Uso -->
-                    <div class="grid grid-cols-2 gap-3 mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
-                        <div class="col-span-1">
-                            <p class="text-[9px] font-black text-slate-400 uppercase mb-0.5">Líder do Partido</p>
-                            <p id="detalhe-partido-lider" class="text-[11px] font-bold text-slate-700">---</p>
-                        </div>
-                        <div class="col-span-1">
-                            <p class="text-[9px] font-black text-slate-400 uppercase mb-0.5">Vice-líder</p>
-                            <p id="detalhe-partido-vice" class="text-[11px] font-bold text-slate-700">---</p>
-                        </div>
-                        <div class="col-span-1 pt-2 border-t border-slate-200">
-                            <p class="text-[9px] font-black text-slate-400 uppercase mb-0.5">Deputados (Total)</p>
-                            <p id="detalhe-partido-total" class="text-[11px] font-bold text-slate-700">0</p>
-                        </div>
-                        <div class="col-span-1 pt-2 border-t border-slate-200">
-                            <p class="text-[9px] font-black text-slate-400 uppercase mb-0.5">Deputados (Ativos)</p>
-                            <p id="detalhe-partido-dep-cad" class="text-[11px] font-bold text-slate-700">0</p>
-                        </div>
-                        <div class="col-span-1 pt-2 border-t border-slate-200">
-                            <p class="text-[9px] font-black text-slate-400 uppercase mb-0.5">Assessores Cad.</p>
-                            <p id="detalhe-partido-assessores" class="text-[11px] font-bold text-slate-700">0</p>
-                        </div>
-                        <div class="col-span-1 pt-2 border-t border-slate-200">
-                            <p class="text-[9px] font-black text-slate-400 uppercase mb-0.5">Licenças (Total)</p>
-                            <p id="detalhe-partido-licencas" class="text-[11px] font-bold text-blue-600">0</p>
-                        </div>
-                    </div>
-
-                    <!-- Indicadores de Orientação e Engajamento -->
-                    <div class="grid grid-cols-2 gap-2 mb-4">
-                        <div class="bg-blue-50 p-2 rounded border border-blue-100 flex flex-col items-center justify-center">
-                            <p class="text-[8px] font-black text-blue-400 uppercase">Orientação Definida</p>
-                            <p id="detalhe-partido-ind-orientacao" class="text-lg font-black text-blue-700">0%</p>
-                        </div>
-                        <div class="bg-indigo-50 p-2 rounded border border-indigo-100 flex flex-col items-center justify-center">
-                            <p class="text-[8px] font-black text-indigo-400 uppercase">Engajamento Escolha</p>
-                            <p id="detalhe-partido-ind-escolha" class="text-lg font-black text-indigo-700">0%</p>
-                        </div>
-                    </div>
-
-                    <!-- Gestão Financeira e Atividade -->
-                    <div class="grid grid-cols-3 gap-2 mb-4">
-                        <div class="bg-white p-2 rounded border shadow-sm">
-                            <p class="text-[8px] font-black text-slate-400 uppercase">Financeiro</p>
-                            <p id="detalhe-partido-fin-status" class="text-[10px] font-bold text-green-600 mt-1">---</p>
-                            <p id="detalhe-partido-fin-valor" class="text-[9px] text-slate-500 font-medium">---</p>
-                        </div>
-                        <div class="bg-white p-2 rounded border shadow-sm">
-                            <p class="text-[8px] font-black text-slate-400 uppercase">Atividade (7d)</p>
-                            <p id="detalhe-partido-eng-ativ" class="text-[10px] font-bold text-slate-700 mt-1">---</p>
-                            <div class="w-full bg-slate-100 h-1 rounded-full mt-1"><div id="detalhe-partido-bar-ativ" class="bg-blue-500 h-full rounded-full" style="width: 0%"></div></div>
-                        </div>
-                        <div class="bg-white p-2 rounded border shadow-sm col-span-1">
-                            <p class="text-[8px] font-black text-slate-400 uppercase">Consultas IA</p>
-                            <p id="detalhe-partido-eng-ia" class="text-[10px] font-bold text-slate-700 mt-0.5">---</p>
-                            <div class="doubt-bar mt-1.5 mb-2">
-                                <div id="bar-doubts-redacao" class="doubt-segment segment-redacao" style="width: 0%"></div>
-                                <div id="bar-doubts-pratico" class="doubt-segment segment-pratico" style="width: 0%"></div>
-                                <div id="bar-doubts-risco" class="doubt-segment segment-risco" style="width: 0%"></div>
-                                <div id="bar-doubts-posicao" class="doubt-segment segment-posicao" style="width: 0%"></div>
+                            <h3 id="detalhe-partido-nome" class="text-xl font-black text-slate-700 uppercase tracking-tight">Nome do Partido</h3>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span id="detalhe-partido-fin-status" class="text-xs font-bold px-2 py-0.5 rounded-full uppercase">---</span>
+                                <span class="text-xs text-slate-400 font-medium">Registro TSE: Ativo</span>
                             </div>
-                            <div class="space-y-1">
-                                <div class="doubt-indicator">
-                                    <div class="flex items-center gap-1.5">
-                                        <i class="fas fa-pen-nib text-orange-500"></i>
-                                        <span class="label">Redação</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="alert('Log de Auditoria carregado.')" class="bg-white text-slate-600 border border-slate-200 px-4 py-2 rounded-lg text-xs font-bold uppercase shadow-sm hover:bg-slate-50 transition-all flex items-center gap-2">
+                            <i class="fas fa-history"></i> Auditoria
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-12 gap-6">
+                    <!-- Coluna Esquerda: Estrutura e Financeiro (4/12) -->
+                    <div class="col-span-12 lg:col-span-4 space-y-6">
+                        <!-- Card de Liderança -->
+                        <div class="bg-white p-6 rounded-xl border shadow-sm">
+                            <h4 class="text-xs font-black text-slate-400 uppercase mb-4 tracking-widest border-b pb-2">Composição de Liderança</h4>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                                    <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600"><i class="fas fa-star"></i></div>
+                                    <div>
+                                        <p class="text-[10px] font-black text-slate-400 uppercase">Líder do Partido</p>
+                                        <p id="detalhe-partido-lider" class="text-sm font-bold text-slate-700">---</p>
                                     </div>
-                                    <span id="val-doubts-redacao" class="value">0%</span>
                                 </div>
-                                <div class="doubt-indicator">
-                                    <div class="flex items-center gap-1.5">
-                                        <i class="fas fa-hammer text-blue-500"></i>
-                                        <span class="label">Prático</span>
+                                <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                                    <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-500"><i class="fas fa-user-shield"></i></div>
+                                    <div>
+                                        <p class="text-[10px] font-black text-slate-400 uppercase">Vice-líder</p>
+                                        <p id="detalhe-partido-vice" class="text-sm font-bold text-slate-700">---</p>
                                     </div>
-                                    <span id="val-doubts-pratico" class="value">0%</span>
                                 </div>
-                                <div class="doubt-indicator">
-                                    <div class="flex items-center gap-1.5">
-                                        <i class="fas fa-biohazard text-red-500"></i>
-                                        <span class="label">Risco</span>
-                                    </div>
-                                    <span id="val-doubts-risco" class="value">0%</span>
+                            </div>
+                        </div>
+
+                        <!-- Status de Licenciamento (Movimentado e Expandido) -->
+                        <div class="bg-white p-6 rounded-xl border shadow-sm">
+                            <h4 class="text-xs font-black text-slate-400 uppercase mb-4 tracking-widest border-b pb-2">Composição da Bancada</h4>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="text-center p-2 bg-slate-50 rounded-lg border border-slate-100">
+                                    <p class="text-[9px] font-black text-slate-400 uppercase">Total Dep.</p>
+                                    <p id="detalhe-partido-total" class="text-lg font-black text-slate-700">0</p>
                                 </div>
-                                <div class="doubt-indicator">
-                                    <div class="flex items-center gap-1.5">
-                                        <i class="fas fa-balance-scale text-green-500"></i>
-                                        <span class="label">Posição</span>
-                                    </div>
-                                    <span id="val-doubts-posicao" class="value">0%</span>
+                                <div class="text-center p-2 bg-slate-50 rounded-lg border border-slate-100">
+                                    <p class="text-[9px] font-black text-slate-400 uppercase">Ativos</p>
+                                    <p id="detalhe-partido-dep-cad" class="text-lg font-black text-green-600">0</p>
                                 </div>
+                                <div class="text-center p-2 bg-slate-50 rounded-lg border border-slate-100">
+                                    <p class="text-[9px] font-black text-slate-400 uppercase">Assessores</p>
+                                    <p id="detalhe-partido-assessores" class="text-lg font-black text-slate-700">0</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Financeiro (Movimentado) -->
+                        <div class="bg-white p-6 rounded-xl border shadow-sm">
+                            <h4 class="text-xs font-black text-slate-400 uppercase mb-4 tracking-widest border-b pb-2">Painel Financeiro</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-slate-500 font-medium">Total de Licenças:</span>
+                                    <span id="detalhe-partido-licencas" class="text-sm font-black text-blue-600">0</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-slate-500 font-medium">Valor Mensal:</span>
+                                    <span id="detalhe-partido-fin-valor" class="text-sm font-black text-slate-700">---</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-slate-500 font-medium">Vencimento:</span>
+                                    <span id="detalhe-partido-fin-venc" class="text-sm font-bold text-slate-700">15/05/2026</span>
+                                </div>
+                                <button class="w-full py-2 mt-2 bg-slate-100 text-slate-600 text-[10px] font-bold uppercase rounded-lg border hover:bg-slate-200 transition-all">Ver Faturas Anteriores</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Ações Rápidas -->
-                    <div class="mb-4">
-                        <h4 class="text-[9px] font-black text-slate-400 uppercase mb-2">Ações do Operador</h4>
+                    <!-- Coluna Direita: Performance e IA (8/12) -->
+                    <div class="col-span-12 lg:col-span-8 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-blue-600 p-6 rounded-xl shadow-lg shadow-blue-900/10 text-white">
+                                <p class="text-xs font-black uppercase opacity-70 mb-1">Orientação Definida</p>
+                                <p id="detalhe-partido-ind-orientacao" class="text-3xl font-black">0%</p>
+                                <p class="text-[11px] mt-2 opacity-80">Projetos com definição do partido.</p>
+                            </div>
+                            <div class="bg-indigo-600 p-6 rounded-xl shadow-lg shadow-indigo-900/10 text-white">
+                                <p class="text-xs font-black uppercase opacity-70 mb-1">Engajamento de Escolha</p>
+                                <p id="detalhe-partido-ind-escolha" class="text-3xl font-black">0%</p>
+                                <p class="text-[11px] mt-2 opacity-80">Membros que declararam posição pessoal.</p>
+                            </div>
+                            <div class="bg-slate-800 p-6 rounded-xl shadow-lg shadow-slate-900/10 text-white">
+                                <p class="text-xs font-black uppercase opacity-70 mb-1">Atividade (7 dias)</p>
+                                <p id="detalhe-partido-eng-ativ" class="text-3xl font-black">0%</p>
+                                <div class="w-full bg-white/20 h-1.5 rounded-full mt-3"><div id="detalhe-partido-bar-ativ" class="bg-blue-400 h-full rounded-full" style="width: 0%"></div></div>
+                            </div>
+                        </div>
+
+                        <!-- Taxonomia da Dúvida (IA) -->
+                        <div class="bg-white p-6 rounded-xl border shadow-sm">
+                            <div class="flex justify-between items-center mb-6 border-b pb-2">
+                                <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest">Taxonomia da Dúvida (Análise IA)</h4>
+                                <span id="detalhe-partido-eng-ia" class="text-xs font-bold text-slate-500 uppercase">--- Consultas</span>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                                <div>
+                                    <div class="doubt-bar h-12 rounded-xl mb-4">
+                                        <div id="bar-doubts-redacao" class="doubt-segment segment-redacao" style="width: 0%"></div>
+                                        <div id="bar-doubts-pratico" class="doubt-segment segment-pratico" style="width: 0%"></div>
+                                        <div id="bar-doubts-risco" class="doubt-segment segment-risco" style="width: 0%"></div>
+                                        <div id="bar-doubts-posicao" class="doubt-segment segment-posicao" style="width: 0%"></div>
+                                    </div>
+                                    <p class="text-[11px] text-slate-400 italic">Distribuição de intenções nas consultas enviadas à IA pela bancada.</p>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="p-3 border rounded-lg bg-slate-50">
+                                        <div class="flex items-center gap-2 mb-1"><i class="fas fa-pen-nib text-orange-500"></i><span class="text-[10px] font-black text-slate-400 uppercase">Redação</span></div>
+                                        <span id="val-doubts-redacao" class="text-lg font-black text-slate-700">0%</span>
+                                    </div>
+                                    <div class="p-3 border rounded-lg bg-slate-50">
+                                        <div class="flex items-center gap-2 mb-1"><i class="fas fa-hammer text-blue-500"></i><span class="text-[10px] font-black text-slate-400 uppercase">Prático</span></div>
+                                        <span id="val-doubts-pratico" class="text-lg font-black text-slate-700">0%</span>
+                                    </div>
+                                    <div class="p-3 border rounded-lg bg-slate-50">
+                                        <div class="flex items-center gap-2 mb-1"><i class="fas fa-biohazard text-red-500"></i><span class="text-[10px] font-black text-slate-400 uppercase">Risco</span></div>
+                                        <span id="val-doubts-risco" class="text-lg font-black text-slate-700">0%</span>
+                                    </div>
+                                    <div class="p-3 border rounded-lg bg-slate-50">
+                                        <div class="flex items-center gap-2 mb-1"><i class="fas fa-balance-scale text-green-500"></i><span class="text-[10px] font-black text-slate-400 uppercase">Posição</span></div>
+                                        <span id="val-doubts-posicao" class="text-lg font-black text-slate-700">0%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-orange-50 border border-orange-100 rounded-xl flex items-start gap-4">
+                            <i class="fas fa-lightbulb text-orange-400 mt-1"></i>
+                            <p class="text-xs text-orange-700 leading-relaxed font-medium">
+                                <b>Dica:</b> O alto volume de dúvidas sobre "Redação" neste partido indica que as notas técnicas do sistema Jabuti precisam ser mais simplificadas para esta bancada.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção Inferior: Tabela de Bancada -->
+                <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
+                    <div class="p-6 border-b flex justify-between items-center">
+                        <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest">Membros da Bancada (Parlamentares e Gabinetes)</h4>
                         <div class="flex gap-2">
-                            <button onclick="sendBroadcast()" class="flex-1 bg-blue-600 text-white py-2 rounded text-[10px] font-bold uppercase shadow-sm hover:bg-blue-700 transition-colors">
-                                <i class="fas fa-bullhorn mr-1"></i> Broadcast
-                            </button>
-                            <button onclick="alert('Histórico de liderança carregado.')" class="flex-1 bg-slate-600 text-white py-2 rounded text-[10px] font-bold uppercase shadow-sm">
-                                <i class="fas fa-history mr-1"></i> Log Liderança
-                            </button>
+                            <input type="text" placeholder="Filtrar por nome ou UF..." class="p-2 border rounded-lg text-xs outline-none bg-slate-50 w-64">
+                            <button class="bg-dark-green text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-green-800 transition-colors">+ Adicionar Membro</button>
                         </div>
                     </div>
-
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center">
-                            <h4 class="text-[10px] font-black text-slate-400 uppercase">Parlamentares</h4>
-                            <button class="text-[10px] font-bold text-blue-600 hover:underline">+ Adicionar Deputado</button>
-                        </div>
-                        
-                        <div class="bg-slate-50 rounded-lg border p-1 max-h-60 overflow-y-auto space-y-1" id="lista-deputados-partido">
-                            <!-- Lista Simulada -->
-                            <div class="flex items-center justify-between p-2 bg-white rounded border-sm">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-6 h-6 rounded-full bg-slate-200"></div>
-                                    <span class="text-[11px] font-bold text-slate-700">Dep. João Lemos</span>
-                                    <span class="text-[8px] bg-yellow-100 text-yellow-700 px-1 rounded font-black uppercase">Líder</span>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button class="text-[10px] text-blue-500 font-bold" title="Tornar Líder"><i class="fas fa-star"></i></button>
-                                    <button class="text-[10px] text-red-400 font-bold" title="Remover"><i class="fas fa-times"></i></button>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between p-2 bg-white rounded border-sm">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-6 h-6 rounded-full bg-slate-200"></div>
-                                    <span class="text-[11px] font-medium text-slate-600">Dep. Maria Silva</span>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button onclick="alert('Definido como novo Líder do Partido')" class="text-[10px] text-slate-300 hover:text-yellow-500 font-bold" title="Tornar Líder"><i class="fas fa-star"></i></button>
-                                    <button class="text-[10px] text-red-400 font-bold" title="Remover"><i class="fas fa-times"></i></button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 border-b border-slate-100">
+                                    <th class="p-4 text-[10px] font-black text-slate-400 uppercase">Parlamentar</th>
+                                    <th class="p-4 text-[10px] font-black text-slate-400 uppercase">Estado</th>
+                                    <th class="p-4 text-[10px] font-black text-slate-400 uppercase">Cargo/Função</th>
+                                    <th class="p-4 text-[10px] font-black text-slate-400 uppercase">Status Acesso</th>
+                                    <th class="p-4 text-[10px] font-black text-slate-400 uppercase text-right">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lista-deputados-partido" class="text-sm">
+                                <!-- Preenchido via JavaScript -->
+                            </tbody>
+                        </table>
                     </div>
+                </div>
 
-                    <div class="pt-4 border-t mt-4 flex gap-2">
-                        <button onclick="changeScreen('operator-partidos')" class="flex-1 p-2 bg-slate-100 text-slate-600 rounded text-[11px] font-bold uppercase">Voltar</button>
-                        <button onclick="alert('Alterações salvas com sucesso')" class="flex-1 p-2 bg-dark-green text-white rounded text-[11px] font-bold uppercase">Salvar Alterações</button>
-                    </div>
-                </section>
-
-                <div class="p-4 bg-orange-50 border border-orange-100 rounded-xl">
-                    <p class="text-[10px] text-orange-700 leading-relaxed italic">
-                        <i class="fas fa-exclamation-triangle mr-1"></i> <b>Nota de Liderança:</b> O parlamentar marcado com a estrela amarela (Líder) terá seu voto replicado como "Orientação do Partido" para todos os demais membros em tempo real.
-                    </p>
+                <div class="flex gap-4">
+                    <button onclick="changeScreen('operator-partidos')" class="px-6 py-3 bg-slate-100 text-slate-600 rounded-xl text-xs font-bold uppercase border hover:bg-slate-200 transition-all">Voltar para Lista</button>
+                    <button onclick="alert('Configurações do partido salvas.')" class="px-8 py-3 bg-dark-green text-white rounded-xl text-xs font-bold uppercase shadow-lg hover:bg-green-800 transition-all ml-auto">Salvar Configurações</button>
                 </div>
             </div>
         </div>
@@ -982,13 +1031,167 @@
                 </div>
             </div>
         </div>
+
+        <!-- 10. OPERATOR USUÁRIOS (DESKTOP FOCUS) -->
+        <div id="screen-operator-users" class="screen">
+            <div class="screen-content space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xs font-black text-slate-400 uppercase">Movimentação e Gestão de Usuários</h3>
+                    <div class="flex gap-2">
+                        <button onclick="logUserAction('Sincronização com base do TSE iniciada')" class="bg-blue-600 text-white text-[10px] font-bold px-3 py-1.5 rounded uppercase shadow-sm">Sincronizar TSE</button>
+                        <button class="bg-dark-green text-white text-[10px] font-bold px-3 py-1.5 rounded uppercase shadow-sm">+ Convidar Usuário</button>
+                    </div>
+                </div>
+
+                <!-- FILTROS USUÁRIOS -->
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <input type="text" placeholder="Buscar por Nome ou E-mail" class="p-2 border rounded text-[11px] outline-none bg-slate-50">
+                    <select class="p-2 border rounded text-[11px] outline-none bg-slate-50">
+                        <option value="">Persona (Todos)</option>
+                        <option>Parlamentar</option>
+                        <option>Assessor</option>
+                        <option>Imprensa</option>
+                        <option>Cidadão</option>
+                    </select>
+                </div>
+
+                <!-- TABELA DE USUÁRIOS (DESKTOP) -->
+                <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 border-b border-slate-100">
+                                    <th class="p-3 text-[10px] font-black text-slate-400 uppercase">Usuário</th>
+                                    <th class="p-3 text-[10px] font-black text-slate-400 uppercase">Persona Atual</th>
+                                    <th class="p-3 text-[10px] font-black text-slate-400 uppercase">Organização</th>
+                                    <th class="p-3 text-[10px] font-black text-slate-400 uppercase">Status</th>
+                                    <th class="p-3 text-[10px] font-black text-slate-400 uppercase text-right">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-[12px]">
+                                <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                                    <td class="p-3">
+                                        <div class="font-bold text-slate-700">Ricardo Mendes</div>
+                                        <div class="text-[10px] text-slate-400">ricardo.mendes@camara.gov.br</div>
+                                    </td>
+                                    <td class="p-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full font-bold text-[9px] uppercase">Assessor</span></td>
+                                    <td class="p-3 text-slate-600">Gab. João Lemos (PSD)</td>
+                                    <td class="p-3"><span class="text-green-600 font-bold">Ativo</span></td>
+                                    <td class="p-3 text-right">
+                                        <div class="flex justify-end gap-2">
+                                            <button onclick="openUserDetails('Ricardo Mendes', 'Assessor', 'ricardo.mendes@camara.gov.br', 'Gab. João Lemos (PSD)')" class="p-1 px-2 bg-slate-100 text-slate-600 rounded hover:bg-blue-600 hover:text-white transition-all" title="Mover Persona"><i class="fas fa-exchange-alt"></i></button>
+                                            <button onclick="toggleUserStatus('Ricardo Mendes', 'Bloqueado')" class="p-1 px-2 bg-slate-100 text-slate-600 rounded hover:bg-orange-500 hover:text-white transition-all" title="Bloquear"><i class="fas fa-ban"></i></button>
+                                            <button onclick="deleteUser('Ricardo Mendes')" class="p-1 px-2 bg-slate-100 text-slate-600 rounded hover:bg-red-600 hover:text-white transition-all" title="Excluir"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                                    <td class="p-3">
+                                        <div class="font-bold text-slate-700">Carla Peixoto</div>
+                                        <div class="text-[10px] text-slate-400">carla@folhapol.com.br</div>
+                                    </td>
+                                    <td class="p-3"><span class="px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full font-bold text-[9px] uppercase">Jornalista</span></td>
+                                    <td class="p-3 text-slate-600">Folha Política (Premium)</td>
+                                    <td class="p-3"><span class="text-green-600 font-bold">Ativo</span></td>
+                                    <td class="p-3 text-right">
+                                        <div class="flex justify-end gap-2">
+                                            <button onclick="openUserDetails('Carla Peixoto', 'Jornalista', 'carla@folhapol.com.br', 'Folha Política (Premium)')" class="p-1 px-2 bg-slate-100 text-slate-600 rounded hover:bg-blue-600 hover:text-white transition-all" title="Mover Persona"><i class="fas fa-exchange-alt"></i></button>
+                                            <button onclick="toggleUserStatus('Carla Peixoto', 'Bloqueado')" class="p-1 px-2 bg-slate-100 text-slate-600 rounded hover:bg-orange-500 hover:text-white transition-all" title="Bloquear"><i class="fas fa-ban"></i></button>
+                                            <button onclick="deleteUser('Carla Peixoto')" class="p-1 px-2 bg-slate-100 text-slate-600 rounded hover:bg-red-600 hover:text-white transition-all" title="Excluir"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                                    <td class="p-3">
+                                        <div class="font-bold text-slate-700">Marcos Oliveira</div>
+                                        <div class="text-[10px] text-slate-400">dep.marcos.oliveira@camara.gov.br</div>
+                                    </td>
+                                    <td class="p-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 rounded-full font-bold text-[9px] uppercase">Parlamentar</span></td>
+                                    <td class="p-3 text-slate-600">Câmara dos Deputados (PSD)</td>
+                                    <td class="p-3"><span class="text-orange-600 font-bold italic">Bloqueado</span></td>
+                                    <td class="p-3 text-right">
+                                        <div class="flex justify-end gap-2">
+                                            <button onclick="openUserDetails('Marcos Oliveira', 'Parlamentar', 'dep.marcos.oliveira@camara.gov.br', 'Câmara dos Deputados (PSD)')" class="p-1 px-2 bg-slate-100 text-slate-600 rounded hover:bg-blue-600 hover:text-white transition-all" title="Mover Persona"><i class="fas fa-exchange-alt"></i></button>
+                                            <button onclick="toggleUserStatus('Marcos Oliveira', 'Ativo')" class="p-1 px-2 bg-orange-500 text-white rounded hover:bg-green-600 transition-all" title="Desbloquear"><i class="fas fa-check-circle"></i></button>
+                                            <button onclick="deleteUser('Marcos Oliveira')" class="p-1 px-2 bg-slate-100 text-slate-600 rounded hover:bg-red-600 hover:text-white transition-all" title="Excluir"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- CONSOLE DE LOG DE USUÁRIOS -->
+                <section class="bg-white p-4 rounded-xl border shadow-sm">
+                    <h3 class="text-xs font-black text-slate-400 uppercase mb-3">Log de Eventos (Usuários)</h3>
+                    <div id="user-event-log" class="console-box h-40 bg-slate-900 text-green-400">
+                        [10:15:22] Sistema: Módulo de gestão de usuários carregado.<br>
+                        [10:16:05] Auditoria: Login do operador efetuado.<br>
+                        [10:20:12] Segurança: Bloqueio automático do usuário 'Marcos Oliveira' por inadimplência da licença partidária (PSD).
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- 10.1 OPERATOR USUÁRIO DETALHE -->
+        <div id="screen-operator-user-detalhe" class="screen">
+            <div class="screen-content space-y-4">
+                <section class="bg-white p-4 rounded-xl border shadow-sm">
+                    <h3 class="text-xs font-black text-slate-400 uppercase mb-4">Ficha de Movimentação de Usuário</h3>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-6">
+                        <div class="col-span-2 md:col-span-1">
+                            <label class="text-[10px] font-black text-slate-400 uppercase">Nome Completo</label>
+                            <input type="text" id="user-detalhe-nome" class="w-full p-2 border rounded text-[12px] outline-none bg-slate-50">
+                        </div>
+                        <div class="col-span-2 md:col-span-1">
+                            <label class="text-[10px] font-black text-slate-400 uppercase">E-mail</label>
+                            <input type="email" id="user-detalhe-email" class="w-full p-2 border rounded text-[12px] outline-none bg-slate-50">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="text-[10px] font-black text-slate-400 uppercase">Organização / Vínculo</label>
+                            <input type="text" id="user-detalhe-org" placeholder="Ex: Gabinete 432, Jornal O Globo, etc" class="w-full p-2 border rounded text-[12px] outline-none bg-slate-50">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="text-[10px] font-black text-slate-400 uppercase mb-3 block">Perfis / Personas Ativas (Movimentação)</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-100">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="persona-parlamentar" class="w-4 h-4 text-green-600 rounded border-slate-300 outline-none">
+                                <label for="persona-parlamentar" class="text-[11px] font-bold text-slate-700 uppercase">Parlamentar</label>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="persona-assessor" class="w-4 h-4 text-blue-600 rounded border-slate-300 outline-none">
+                                <label for="persona-assessor" class="text-[11px] font-bold text-slate-700 uppercase">Assessor</label>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="persona-imprensa" class="w-4 h-4 text-purple-600 rounded border-slate-300 outline-none">
+                                <label for="persona-imprensa" class="text-[11px] font-bold text-slate-700 uppercase">Imprensa</label>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="persona-cidadao" class="w-4 h-4 text-orange-600 rounded border-slate-300 outline-none">
+                                <label for="persona-cidadao" class="text-[11px] font-bold text-slate-700 uppercase">Cidadão</label>
+                            </div>
+                        </div>
+                        <p class="text-[9px] text-slate-400 mt-2 italic">* Ao alterar o perfil, o sistema aplicará as novas permissões e restrições de acesso imediatamente.</p>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button onclick="changeScreen('operator-users')" class="flex-1 p-2 bg-slate-100 text-slate-600 rounded text-[11px] font-bold uppercase border border-slate-200">Cancelar</button>
+                        <button onclick="saveUserChanges()" class="flex-1 p-2 bg-dark-green text-white rounded text-[11px] font-bold uppercase shadow-md">Salvar Alterações</button>
+                    </div>
+                </section>
+            </div>
+        </div>
     </div>
 
     <script>
         const subtitles = {
             'login': '', 'home': 'Projetos em Pauta', 'capa': 'Ficha Técnica', 'detalhe': 'ANÁLISE IA (Riscos & Alertas)', 
             'analise': 'Análise Detalhada (LLM)', 'chat': 'Chat Contextual IA', 'riscos-altos': 'Riscos de Nível Alto', 'riscos-moderados': 'Riscos de Nível Moderado', 'reincarnacao': 'Histórico de Reencarnação', 
-            'operator-dashboard': 'Dashboard de Saúde', 'operator': 'Gestão de Fontes', 'operator-parlamentares': 'Gestão de Parlamentares', 'operator-parlamentar-detalhe': 'Ficha do Parlamentar', 'operator-partidos': 'Gestão de Partidos', 'operator-partido-detalhe': 'Detalhe do Partido', 'operator-contingencia': 'Central de Contingência', 'operator-editor': 'Editor de Jabutis'
+            'operator-dashboard': 'Dashboard de Saúde', 'operator': 'Gestão de Fontes', 'operator-parlamentares': 'Gestão de Parlamentares', 'operator-parlamentar-detalhe': 'Ficha do Parlamentar', 'operator-partidos': 'Gestão de Partidos', 'operator-partido-detalhe': 'Detalhe do Partido', 'operator-contingencia': 'Central de Contingência', 'operator-editor': 'Editor de Jabutis', 'operator-users': 'Gestão de Usuários', 'operator-user-detalhe': 'Movimentação de Usuário'
         };
         const partyProfiles = {
             'geral': { orientation: 'neutra', label: 'Percepção da Casa', marker: '50%' },
@@ -1026,7 +1229,66 @@
                 document.getElementById('btn-operator-partidos').classList.remove('hidden');
                 document.getElementById('btn-operator-contingencia').classList.remove('hidden');
                 document.getElementById('btn-operator-editor').classList.remove('hidden');
+                document.getElementById('btn-operator-users').classList.remove('hidden');
                 changeScreen('operator-dashboard');
+            }
+        }
+
+        function logUserAction(action) {
+            const log = document.getElementById('user-event-log');
+            const now = new Date();
+            const time = now.getHours().toString().padStart(2, '0') + ':' + 
+                         now.getMinutes().toString().padStart(2, '0') + ':' + 
+                         now.getSeconds().toString().padStart(2, '0');
+            log.innerHTML += `[${time}] ${action}<br>`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function openUserDetails(userName, persona, email, org) {
+            document.getElementById('user-detalhe-nome').value = userName;
+            document.getElementById('user-detalhe-email').value = email;
+            document.getElementById('user-detalhe-org').value = org;
+            
+            // Reset checkboxes
+            document.getElementById('persona-parlamentar').checked = false;
+            document.getElementById('persona-assessor').checked = false;
+            document.getElementById('persona-imprensa').checked = false;
+            document.getElementById('persona-cidadao').checked = false;
+
+            // Set current persona
+            if (persona === 'Parlamentar') document.getElementById('persona-parlamentar').checked = true;
+            if (persona === 'Assessor') document.getElementById('persona-assessor').checked = true;
+            if (persona === 'Jornalista' || persona === 'Imprensa') document.getElementById('persona-imprensa').checked = true;
+            if (persona === 'Cidadão') document.getElementById('persona-cidadao').checked = true;
+
+            changeScreen('operator-user-detalhe');
+        }
+
+        function saveUserChanges() {
+            const userName = document.getElementById('user-detalhe-nome').value;
+            const personas = [];
+            if (document.getElementById('persona-parlamentar').checked) personas.push('Parlamentar');
+            if (document.getElementById('persona-assessor').checked) personas.push('Assessor');
+            if (document.getElementById('persona-imprensa').checked) personas.push('Imprensa');
+            if (document.getElementById('persona-cidadao').checked) personas.push('Cidadão');
+
+            logUserAction(`Movimentação: Dados do usuário '${userName}' atualizados. Novos perfis: ${personas.join(', ')}.`);
+            alert('Alterações salvas com sucesso!');
+            changeScreen('operator-users');
+        }
+
+        function toggleUserStatus(userName, newStatus) {
+            const reason = prompt(`Motivo do ${newStatus.toLowerCase()} para '${userName}':`);
+            if (reason) {
+                logUserAction(`Status: '${userName}' alterado para ${newStatus}. Motivo: ${reason}`);
+                alert(`Status de ${userName} alterado para ${newStatus}.`);
+            }
+        }
+
+        function deleteUser(userName) {
+            if (confirm(`TEM CERTEZA que deseja excluir permanentemente o usuário '${userName}'? Esta ação não pode ser desfeita.`)) {
+                logUserAction(`EXCLUSÃO: Usuário '${userName}' removido permanentemente do sistema.`);
+                alert(`Usuário ${userName} excluído.`);
             }
         }
 
@@ -1087,37 +1349,41 @@
                     atividade: '62%', consultas: '180', 
                     doubts: { redacao: 50, pratico: 20, risco: 25, posicao: 5 },
                     indOrientacao: '75%', indEscolha: '30%'
+                },
+                'PL': { 
+                    lider: 'Dep. Altineu Côrtes', vice: 'Dep. Eduardo Bolsonaro', total: '96', depCad: '45', ass: '210',
+                    status: 'Adimplente', proxCobranca: '20/05/26', valor: 'R$ 52.000,00',
+                    atividade: '84%', consultas: '630', 
+                    doubts: { redacao: 30, pratico: 40, risco: 20, posicao: 10 },
+                    indOrientacao: '88%', indEscolha: '52%'
                 }
             };
             
-            const s = stats[sigla] || { lider: 'Não Definido', vice: 'Não Definido', total: '0', depCad: '0', ass: '0', status: '---', valor: '---', atividade: '0%', consultas: '0', doubts: { redacao: 0, pratico: 0, risco: 0, posicao: 0 }, indOrientacao: '0%', indEscolha: '0%' };
+            const s = stats[sigla] || { lider: 'Não Definido', vice: 'Não Definido', total: '0', depCad: '0', ass: '0', status: 'Inativo', valor: '---', atividade: '0%', consultas: '0', doubts: { redacao: 0, pratico: 0, risco: 0, posicao: 0 }, indOrientacao: '0%', indEscolha: '0%' };
             
             document.getElementById('detalhe-partido-lider').innerText = s.lider;
             document.getElementById('detalhe-partido-vice').innerText = s.vice;
             document.getElementById('detalhe-partido-total').innerText = s.total;
             document.getElementById('detalhe-partido-dep-cad').innerText = s.depCad;
             document.getElementById('detalhe-partido-assessores').innerText = s.ass;
+            document.getElementById('detalhe-partido-licencas').innerText = parseInt(s.depCad) + parseInt(s.ass);
             
-            // Cálculo total de licenças: Deputados Cadastrados + Assessores
-            const totalLicenças = parseInt(s.depCad) + parseInt(s.ass);
-            document.getElementById('detalhe-partido-licencas').innerText = totalLicenças;
-            
-            // Indicadores de Orientação e Engajamento
+            // Indicadores
             document.getElementById('detalhe-partido-ind-orientacao').innerText = s.indOrientacao;
             document.getElementById('detalhe-partido-ind-escolha').innerText = s.indEscolha;
             
-            // Atualizando campos financeiros e de engajamento
+            // Financeiro
             const finStatus = document.getElementById('detalhe-partido-fin-status');
             finStatus.innerText = s.status;
-            finStatus.className = s.status === 'Adimplente' ? 'text-[10px] font-bold text-green-600 mt-1' : 'text-[10px] font-bold text-red-600 mt-1';
+            finStatus.className = s.status === 'Adimplente' ? 'text-xs font-bold px-2 py-0.5 rounded-full uppercase bg-green-100 text-green-700' : 'text-xs font-bold px-2 py-0.5 rounded-full uppercase bg-red-100 text-red-700';
             document.getElementById('detalhe-partido-fin-valor').innerText = s.valor;
             
+            // Atividade
             document.getElementById('detalhe-partido-eng-ativ').innerText = s.atividade;
             document.getElementById('detalhe-partido-bar-ativ').style.width = s.atividade;
+            document.getElementById('detalhe-partido-eng-ia').innerText = s.consultas + " Consultas";
             
-            document.getElementById('detalhe-partido-eng-ia').innerText = s.consultas;
-            
-            // Atualizando distribuição de dúvidas
+            // Dúvidas
             document.getElementById('bar-doubts-redacao').style.width = s.doubts.redacao + '%';
             document.getElementById('bar-doubts-pratico').style.width = s.doubts.pratico + '%';
             document.getElementById('bar-doubts-risco').style.width = s.doubts.risco + '%';
@@ -1128,14 +1394,48 @@
             document.getElementById('val-doubts-risco').innerText = s.doubts.risco + '%';
             document.getElementById('val-doubts-posicao').innerText = s.doubts.posicao + '%';
 
-            changeScreen('operator-partido-detalhe');
-        }
+            // Popular Tabela de Membros (Simulado)
+            const list = document.getElementById('lista-deputados-partido');
+            list.innerHTML = `
+                <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                    <td class="p-4 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-slate-200"></div>
+                        <div>
+                            <p class="font-bold text-slate-700">${s.lider}</p>
+                            <p class="text-[10px] text-slate-400 uppercase">lideranca.${sigla.toLowerCase()}@camara.leg.br</p>
+                        </div>
+                    </td>
+                    <td class="p-4 text-slate-600 font-medium">DF</td>
+                    <td class="p-4"><span class="px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded-full font-black text-[9px] uppercase">Líder</span></td>
+                    <td class="p-4"><span class="text-green-600 font-bold">Ativo</span></td>
+                    <td class="p-4 text-right">
+                        <div class="flex justify-end gap-3 text-slate-400">
+                            <i class="fas fa-edit cursor-pointer hover:text-blue-600 transition-all"></i>
+                            <i class="fas fa-trash cursor-pointer hover:text-red-600 transition-all"></i>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                    <td class="p-4 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-slate-200"></div>
+                        <div>
+                            <p class="font-bold text-slate-700">${s.vice}</p>
+                            <p class="text-[10px] text-slate-400 uppercase">vice.${sigla.toLowerCase()}@camara.leg.br</p>
+                        </div>
+                    </td>
+                    <td class="p-4 text-slate-600 font-medium">SP</td>
+                    <td class="p-4"><span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-full font-black text-[9px] uppercase">Vice-Líder</span></td>
+                    <td class="p-4"><span class="text-green-600 font-bold">Ativo</span></td>
+                    <td class="p-4 text-right">
+                        <div class="flex justify-end gap-3 text-slate-400">
+                            <i class="fas fa-edit cursor-pointer hover:text-blue-600 transition-all"></i>
+                            <i class="fas fa-trash cursor-pointer hover:text-red-600 transition-all"></i>
+                        </div>
+                    </td>
+                </tr>
+            `;
 
-        function sendBroadcast() {
-            const msg = prompt("Digite a mensagem para todos os membros do partido:");
-            if (msg) {
-                alert("Mensagem enviada com sucesso para todos os parlamentares e assessores cadastrados!");
-            }
+            changeScreen('operator-partido-detalhe');
         }
 
         function openParlamentarDetails(nomePub = '', nomeComp = '', partido = 'PSD', uf = 'DF', gab = '', chefe = '', tel = '', cel = '', email = '', isLider = false, hasLicenca = false) {
